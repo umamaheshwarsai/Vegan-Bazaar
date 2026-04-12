@@ -802,6 +802,7 @@ function saveEditItem(){
   if(level==='sec'){it=st.items[curSec][idx];}
   else if(level==='dish'){it=st.subitems[curSec+'_'+curItem.id][idx];}
   else if(level==='deep'){const frame=deepStack[deepStack.length-1];it=st.deep[frame.key][idx];}
+  else if(level==='rm'){it=st.rmManual[curRmCat][idx];}
   if(!it)return;
   it.name=name;it.notes=notes;
   const sec=st.sections.find(s=>s.id===curSec);
@@ -813,6 +814,7 @@ function saveEditItem(){
   save();closeModal('edit-item-modal');
   if(level==='sec')renderSecItems();
   else if(level==='dish')renderDishItems();
+  else if(level==='rm')renderRmCatItems();
   else renderDeepPage();
 }
 
@@ -994,11 +996,12 @@ function renderRmCatItems(){
   c.innerHTML=all.map(it=>{
     if(it.synced)return `<div class="irow synced" onclick="showAlert()"><button class="tog readonly ${it.done?'done':''}" onclick="showAlert();event.stopPropagation()"></button><div class="icontent"><div class="iname">${it.name}</div>${it.sourceDisp?`<div class="inotes">From: ${it.sourceDisp}</div>`:''}<span class="sync-badge">🔗 Synced from Menu Curation</span></div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span></div>`;
     const mi=it._mi;
-    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${mi})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><button class="del-btn" onclick="delRmManual(${mi})">×</button></div>`;
+    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${mi})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><div class="row-actions"><button class="edit-btn" onclick="openEditRm(event,${mi})">✎</button><button class="del-btn" onclick="delRmManual(${mi})">×</button></div></div>`;
   }).join('');
 }
 function togRmManual(i){st.rmManual[curRmCat][i].done=!st.rmManual[curRmCat][i].done;save();renderRmCatItems();renderHome();}
 function delRmManual(i){if(!confirm('Delete?'))return;st.rmManual[curRmCat].splice(i,1);save();renderRmCatItems();renderHome();}
+function openEditRm(e,i){e.stopPropagation();const it=st.rmManual[curRmCat][i];if(!it)return;editCtx={level:'rm',idx:i};document.getElementById('ei-name').value=it.name||'';document.getElementById('ei-notes').value=it.notes||'';document.getElementById('ei-tag-area').style.display='none';document.getElementById('ei-cta-area').style.display='none';openModal('edit-item-modal');}
 function addRmItem(){
   const name=document.getElementById('nrm-name').value.trim();if(!name)return;
   const notes=document.getElementById('nrm-notes').value.trim();
