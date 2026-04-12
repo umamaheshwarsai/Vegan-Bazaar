@@ -1216,3 +1216,22 @@ window.onload = async () => {
   syncNow();// ✅ now it WILL exist
 };
 setInterval(syncNow, 10000);
+(async () => {
+  try {
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
+    });
+
+    const data = await res.json();
+
+    if (data.record) {
+      st = data.record;
+      migrateSt();
+      localSave();
+      renderHome();
+      console.log("🔥 Initial load from cloud");
+    }
+  } catch (e) {
+    console.log("Initial load failed");
+  }
+})();
