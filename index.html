@@ -1191,33 +1191,26 @@ function showLocalFilter(filterId,itemCount){
 window.onload = async () => {
   console.log("🚀 App starting...");
 
-  const local = localLoad();
-
   try {
-    const res = await fetch(BIN_URL + '/latest', {
+    const res = await fetch("https://api.jsonbin.io/v3/b/69daab5636566621a8a22851/latest", {
       headers: {
-        'X-Master-Key': API_KEY,
-        'X-Bin-Meta': false
+        "X-Master-Key": "$2a$10$5Ms12r9fbKUkzrmyLlxL.uqNxc3zrKcfICnPpTDM7kLYkBLyz0mIq"
       }
     });
 
     const data = await res.json();
-    console.log("☁️ Cloud data:", data);
+    console.log("☁️ Cloud:", data);
 
-    if (data.record && data.record.sections && data.record.sections.length > 0) {
+    if (data.record) {
       st = data.record;
       console.log("✅ Loaded from cloud");
-    } else if (local) {
-      st = local;
-      console.log("📦 Cloud empty → using local");
-      await pushCloud();
     }
 
   } catch (e) {
-    console.log("⚠️ Cloud failed → using local");
-    if (local) st = local;
+    console.log("⚠️ Cloud failed", e);
   }
 
+  // 👉 ONLY render AFTER data is set
   migrateSt();
   localSave();
   renderHome();
