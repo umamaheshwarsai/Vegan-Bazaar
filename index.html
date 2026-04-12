@@ -1189,32 +1189,37 @@ function showLocalFilter(filterId,itemCount){
 /* ═══════════════════════════════════════════
    INIT
 window.onload = async () => {
+  console.log("🚀 App starting...");
+
+  const local = localLoad();
+
   try {
-    // 🌍 Load from cloud first
     const res = await fetch(BIN_URL + '/latest', {
-      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
+      headers: {
+        'X-Master-Key': API_KEY,
+        'X-Bin-Meta': false
+      }
     });
 
     const data = await res.json();
+    console.log("☁️ Cloud data:", data);
 
-    if (data.record && data.record.sections) {
+    if (data.record && data.record.sections && data.record.sections.length > 0) {
       st = data.record;
-      migrateSt();
-      localSave();
-      console.log("Loaded from cloud ☁️");
-    } else {
-      throw new Error("No cloud data");
+      console.log("✅ Loaded from cloud");
+    } else if (local) {
+      st = local;
+      console.log("📦 Cloud empty → using local");
+      await pushCloud();
     }
 
   } catch (e) {
-    // 💾 fallback to local
-    const cached = localLoad();
-    if (cached) {
-      st = cached;
-      console.log("Loaded from local 💾");
-    }
+    console.log("⚠️ Cloud failed → using local");
+    if (local) st = local;
   }
 
+  migrateSt();
+  localSave();
   renderHome();
 };
 setInterval(async () => {
