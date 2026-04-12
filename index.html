@@ -490,7 +490,14 @@ async function pushCloud(){
   catch(e){}
   localSave();
 }
-function save(){localSave();pushCloud();}
+async function save(){
+  localSave(); // backup
+  try {
+    await pushCloud(); // cloud is primary now
+  } catch(e) {
+    console.log("Cloud save failed, using local backup");
+  }
+}
 
 /* ═══════════════════════════════════════════
    HELPERS
@@ -1167,13 +1174,49 @@ function showLocalFilter(filterId,itemCount){
 
 /* ═══════════════════════════════════════════
    INIT
-═══════════════════════════════════════════ */
-const cached=localLoad();
-if(cached){st=cached;}
-migrateSt();
-localSave();
-renderHome();
-syncNow();
-</script>
-</body>
-</html>
+window.onload = async () => {
+  try {
+    // 🌍 Load from cloud first
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
+    });
+
+    const data = await res.json();
+
+    if (data.record && data.record.sections) {
+      st = data.record;
+      migrateSt();
+      localSave();
+      console.log("Loaded from cloud ☁️");
+    } else {
+      throw new Error("No cloud data");
+    }
+
+  } catch (e) {
+    // 💾 fallback to local
+    const cached = localLoad();
+    if (cached) {
+      st = cached;
+      console.log("Loaded from local 💾");
+    }
+  }
+
+  renderHome();
+};
+setInterval(async () => {
+  try {
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
+    });
+
+    const data = await res.json();
+
+    if (JSON.stringify(data.record) !== JSON.stringify(st)) {
+      st = data.record;
+      migrateSt();
+      localSave();
+      renderHome();
+      console.log("Auto-synced 🔄");
+    }
+  } catch (e) {}
+}, 10000);
