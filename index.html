@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Project Vegan Bazaar — The Boys</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Project Vegan Bazaar</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -18,6 +17,8 @@
 }
 body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:var(--ink);max-width:480px;margin:0 auto;}
 .page{display:none;min-height:100vh;padding-bottom:60px;}.page.active{display:block;}
+
+/* HEADER */
 .wc-header{background:var(--teal);padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden;}
 .wc-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120px 80px at 15% 30%,rgba(74,158,128,0.5) 0%,transparent 70%),radial-gradient(ellipse 80px 60px at 85% 70%,rgba(184,216,128,0.3) 0%,transparent 70%);}
 .wc-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:18px;background:var(--cream);clip-path:ellipse(55% 100% at 50% 100%);}
@@ -25,25 +26,31 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 .wc-title{font-family:var(--font-h);font-size:24px;color:#e8f5e0;letter-spacing:0.3px;position:relative;}
 .wc-sub{font-size:12px;color:#9fd0b8;position:relative;margin-top:4px;font-style:italic;}
 .texture-strip{height:8px;background:repeating-linear-gradient(90deg,var(--leaf3) 0px,var(--leaf3) 3px,transparent 3px,transparent 10px);opacity:0.4;}
-.home-actions{display:flex;gap:8px;padding:14px 14px 0;justify-content:flex-end;align-items:center;}
-.sync-btn{background:var(--mint);border:1px solid var(--mint2);color:var(--teal);font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;gap:4px;}
-.sync-btn:hover{background:var(--mint2);}.sync-btn.syncing{opacity:0.6;pointer-events:none;}
+
+/* HOME ACTIONS */
+.home-actions{display:flex;gap:8px;padding:14px 14px 0;justify-content:flex-end;}
+.sync-btn{background:var(--mint);border:1px solid var(--mint2);color:var(--teal);font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer;font-family:var(--font-b);}
+.sync-btn.syncing{opacity:0.6;pointer-events:none;}
 .wa-btn{background:#25d366;border:none;color:white;font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer;font-family:var(--font-b);}
-.wa-btn:hover{background:#1da851;}
 .sync-status{font-size:11px;color:var(--ink3);padding:4px 14px 0;text-align:right;}
+
+/* SECTION GRID */
 .s-grid{padding:10px 14px 8px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .s-card{background:white;border-radius:16px;padding:16px 13px 20px;cursor:pointer;position:relative;overflow:hidden;border:1.5px solid rgba(74,122,42,0.12);transition:transform 0.15s;}
 .s-card:hover{transform:translateY(-2px);}.s-card:active{transform:scale(0.97);}
 .s-card.all-done{border-color:rgba(74,122,42,0.4);background:#f6fff6;}
 .s-card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:16px 16px 0 0;}
-.s-card .ic{font-size:22px;margin:6px 0 8px;}.s-card .ct{font-family:var(--font-h);font-size:14px;color:var(--ink);line-height:1.3;}
+.s-card .ic{font-size:22px;margin:6px 0 8px;}
+.s-card .ct{font-family:var(--font-h);font-size:14px;color:var(--ink);line-height:1.3;}
 .s-card .cm{font-size:11px;color:var(--ink3);margin-top:3px;}
 .s-card .cpbar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--mint2);}
 .s-card .cpfill{height:100%;background:var(--leaf);border-radius:2px;transition:width 0.3s;}
 .done-crown{position:absolute;top:8px;right:10px;font-size:14px;}
-.add-sec-btn{margin:4px 14px 10px;width:calc(100% - 28px);padding:11px;border:1.5px dashed var(--leaf3);border-radius:12px;background:transparent;color:var(--leaf);font-family:var(--font-b);font-size:13px;cursor:pointer;}
+.add-sec-btn{margin:4px 14px 6px;width:calc(100% - 28px);padding:11px;border:1.5px dashed var(--leaf3);border-radius:12px;background:transparent;color:var(--leaf);font-family:var(--font-b);font-size:13px;cursor:pointer;}
 .add-sec-btn:hover{background:var(--mint);}
 .mgr-btn{display:block;margin:0 auto 12px;background:none;border:none;color:var(--ink3);font-size:12px;cursor:pointer;font-family:var(--font-b);text-decoration:underline;}
+
+/* PAGE HEADER */
 .ph{background:white;border-bottom:2px solid var(--mint2);padding:14px 16px 10px;position:sticky;top:0;z-index:20;}
 .ph-nav{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
 .back-btn{background:none;border:none;color:var(--teal2);font-size:13px;cursor:pointer;font-family:var(--font-b);}
@@ -52,34 +59,42 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 .ph-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
 .breadcrumb{font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:4px;}
 .breadcrumb b{color:var(--teal2);}
+
+/* STATS */
 .stats{display:flex;gap:10px;padding:10px 16px 4px;}
 .stat{font-size:11px;padding:3px 10px;border-radius:20px;}
 .stat.d{background:#e0f5e8;color:#2a6a3a;}.stat.p{background:#fef0dc;color:#8a4a10;}.stat.all{background:#c8f0d0;color:#1a5a2a;font-weight:500;}
+
+/* ITEM ROWS */
 .ilist{padding:10px 14px;}
 .irow{background:white;border:1.5px solid rgba(74,122,42,0.1);border-radius:12px;padding:11px 12px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;}
 .irow.done .iname{text-decoration:line-through;color:var(--ink3);}
 .irow.done{background:#fafff8;border-color:rgba(74,122,42,0.18);}
 .irow.clickable{cursor:pointer;}.irow.clickable:hover{background:var(--mint);}
-.irow.has-link{cursor:pointer;border-color:rgba(29,92,74,0.25);}.irow.has-link:hover{background:var(--mint);}
 .irow.synced{border-left:3px solid var(--teal3);background:#f8fffe;}
-.tog{width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid var(--leaf3);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s;margin-top:1px;}
+.tog{width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid var(--leaf3);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;margin-top:1px;}
 .tog.done{background:var(--leaf);border-color:var(--leaf);}.tog.done::after{content:'✓';color:white;font-size:10px;}
 .tog.readonly{cursor:not-allowed;border-color:var(--teal3);opacity:0.7;}
 .icontent{flex:1;min-width:0;}
 .iname{font-size:14px;font-weight:500;color:var(--ink);}
 .inotes{font-size:12px;color:var(--ink3);margin-top:2px;word-break:break-word;}
-.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
+.tags-wrap{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
 .tag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;border:1px solid;}
 .tag.consumable{background:#e8f5e0;color:#2a5a10;border-color:#b8d890;}
 .tag.nonconsumable{background:#fff0e0;color:#8a4a10;border-color:#f0c880;}
 .tag.misc{background:#f0f0f0;color:#5a5a5a;border-color:#d0d0d0;}
 .sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 8px;border-radius:20px;background:#e0f5ff;color:#0a5a8a;border:1px solid #90d0f0;margin-top:4px;}
+.link-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--mint);color:var(--teal);border:1px solid var(--mint2);margin-top:4px;}
 .sbadge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap;}
 .sbadge.d{background:#e0f5e8;color:#2a6a3a;}.sbadge.p{background:#fef0dc;color:#8a4a10;}
-.del-btn{background:none;border:none;color:#ccc;font-size:16px;cursor:pointer;align-self:center;line-height:1;}
+.row-actions{display:flex;align-items:center;gap:4px;align-self:center;}
+.edit-btn{background:none;border:none;color:var(--ink3);font-size:13px;cursor:pointer;padding:2px 4px;}
+.edit-btn:hover{color:var(--teal);}
+.del-btn{background:none;border:none;color:#ccc;font-size:16px;cursor:pointer;line-height:1;}
 .del-btn:hover{color:#e24b4a;}
-.drill{color:var(--ink3);font-size:16px;align-self:center;font-weight:500;}
-.link-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--mint);color:var(--teal);border:1px solid var(--mint2);margin-top:4px;}
+.drill{color:var(--ink3);font-size:16px;font-weight:500;}
+
+/* ADD / EDIT FORMS */
 .add-area{padding:4px 14px 16px;}
 .open-add{width:100%;padding:10px;border:1.5px dashed var(--leaf3);border-radius:10px;background:transparent;color:var(--leaf);font-family:var(--font-b);font-size:13px;cursor:pointer;}
 .open-add:hover{background:var(--mint);}
@@ -91,41 +106,68 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 .form-row{display:flex;gap:8px;}
 .btn-p{background:var(--teal);color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-family:var(--font-b);cursor:pointer;flex:1;}
 .btn-s{background:var(--mint);color:var(--teal);border:1px solid var(--mint2);border-radius:8px;padding:8px 12px;font-size:13px;font-family:var(--font-b);cursor:pointer;}
-.tags-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-.tag-opt{font-size:11px;padding:3px 10px;border-radius:20px;cursor:pointer;border:1px solid transparent;}
+.form-label{font-size:11px;color:var(--ink3);margin-bottom:2px;}
+
+/* TAGS */
+.tags-select-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.tag-chip{font-size:11px;padding:3px 10px;border-radius:20px;cursor:pointer;border:1px solid transparent;}
+.tag-chip.sel{font-weight:500;}
+
+/* ORDER BOX */
 .order-box{margin:14px 14px 0;background:white;border:1.5px solid var(--mint2);border-radius:12px;padding:14px;}
 .order-box label{font-size:12px;color:var(--ink3);display:block;margin-bottom:6px;}
 .link-row{display:flex;gap:8px;align-items:center;}
 .link-row input{flex:1;border:1px solid var(--mint2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;}
 .open-link{padding:8px 12px;background:var(--teal);color:white;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-family:var(--font-b);}
 .link-ok{font-size:11px;color:var(--leaf);margin-top:4px;display:none;}
-.sec-link-row select{border:1px solid var(--mint2);border-radius:8px;padding:6px 8px;font-size:12px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;width:100%;}
+
+/* MODAL */
 .modal-wrap{display:none;position:fixed;inset:0;background:rgba(20,40,20,0.45);z-index:100;align-items:flex-end;justify-content:center;}
 .modal-wrap.open{display:flex;}
-.modal{background:white;border-radius:20px 20px 0 0;padding:24px 20px 28px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;}
+.modal{background:white;border-radius:20px 20px 0 0;padding:24px 20px 28px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;}
 .modal h3{font-family:var(--font-h);font-size:18px;color:var(--teal);margin-bottom:16px;}
-.modal input,.modal select{width:100%;border:1.5px solid var(--mint2);border-radius:8px;padding:10px 12px;font-size:14px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;margin-bottom:10px;}
+.modal input,.modal select,.modal textarea{width:100%;border:1.5px solid var(--mint2);border-radius:8px;padding:10px 12px;font-size:14px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;margin-bottom:10px;}
+.modal textarea{resize:vertical;min-height:60px;}
 .icon-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
 .ic-opt{font-size:20px;padding:6px 9px;border-radius:8px;background:var(--mint);border:1.5px solid transparent;cursor:pointer;}
 .ic-opt.sel{border-color:var(--teal3);}
-.mgr-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--mint2);}
-.mgr-row span:nth-child(2){flex:1;font-size:14px;}
-.empty{text-align:center;padding:28px 16px;color:var(--ink3);font-size:13px;}
-.alert-pop{display:none;position:fixed;inset:0;background:rgba(20,40,20,0.45);z-index:200;align-items:center;justify-content:center;}
-.alert-pop.open{display:flex;}
-.alert-box{background:white;border-radius:16px;padding:24px 22px;max-width:320px;width:90%;text-align:center;}
-.alert-box .alert-icon{font-size:28px;margin-bottom:10px;}
-.alert-box p{font-size:14px;color:var(--ink);margin-bottom:16px;line-height:1.5;}
-.alert-box button{background:var(--teal);color:white;border:none;border-radius:8px;padding:9px 24px;font-size:13px;font-family:var(--font-b);cursor:pointer;}
-.tag-editor-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--mint2);}
-.tag-preview{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;min-width:60px;text-align:center;}
 .color-swatches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
 .swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
 .swatch.sel{border-color:#333;}
+
+/* MANAGE SECTIONS */
+.mgr-row{background:white;border:1px solid var(--mint2);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.mgr-row-top{display:flex;align-items:center;gap:10px;}
+.mgr-row-top .ic{font-size:20px;}
+.mgr-row-top .nm{flex:1;font-size:14px;font-weight:500;}
+.mgr-edit-btn{background:var(--mint);border:none;color:var(--teal);font-size:12px;padding:4px 10px;border-radius:8px;cursor:pointer;font-family:var(--font-b);}
+.mgr-del-btn{background:none;border:none;color:#e24b4a;font-size:18px;cursor:pointer;}
+.mgr-edit-form{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--mint2);flex-direction:column;gap:8px;}
+.mgr-edit-form.open{display:flex;}
+.mgr-edit-form input,.mgr-edit-form select{width:100%;border:1px solid var(--mint2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;}
+
+/* TAGS EDITOR */
+.tag-editor-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--mint2);}
+.tag-preview{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;min-width:60px;text-align:center;}
+
+/* ALERT */
+.alert-pop{display:none;position:fixed;inset:0;background:rgba(20,40,20,0.45);z-index:200;align-items:center;justify-content:center;}
+.alert-pop.open{display:flex;}
+.alert-box{background:white;border-radius:16px;padding:24px 22px;max-width:320px;width:90%;text-align:center;}
+.alert-icon{font-size:28px;margin-bottom:10px;}
+.alert-box p{font-size:14px;color:var(--ink);margin-bottom:16px;line-height:1.5;}
+.alert-box button{background:var(--teal);color:white;border:none;border-radius:8px;padding:9px 24px;font-size:13px;font-family:var(--font-b);cursor:pointer;}
+
+/* RM */
+.rm-cat-row{cursor:pointer;}
+.rm-cat-row:hover{background:var(--mint);}
+.empty{text-align:center;padding:28px 16px;color:var(--ink3);font-size:13px;}
 </style>
 </head>
 <body>
 <div id="app">
+
+<!-- HOME -->
 <div id="home-page" class="page active">
   <div class="wc-header">
     <div class="wc-logo">🌿</div>
@@ -139,14 +181,16 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
   </div>
   <div class="sync-status" id="sync-status">Last sync: never</div>
   <div class="s-grid" id="s-grid"></div>
-  <button class="add-sec-btn" onclick="openAddSec()">+ Add section</button>
-  <button class="mgr-btn" onclick="showMgr()">manage sections</button>
+  <button class="add-sec-btn" onclick="openAddSecModal()">+ Add section</button>
+  <button class="mgr-btn" onclick="openMgrModal()">manage sections</button>
 </div>
 
+<!-- GENERIC SECTION PAGE (tasks / general / orders / materials-list) -->
 <div id="sec-page" class="page">
   <div class="ph">
     <div class="ph-nav"><button class="back-btn" onclick="goHome()">← Home</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
-    <div class="ph-title" id="sec-title"></div><div class="ph-sub" id="sec-sub"></div>
+    <div class="ph-title" id="sec-title"></div>
+    <div class="ph-sub" id="sec-sub"></div>
   </div>
   <div class="stats" id="sec-stats"></div>
   <div id="order-box" class="order-box" style="display:none;">
@@ -156,107 +200,122 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
   </div>
   <div class="ilist" id="sec-items"></div>
   <div class="add-area">
-    <button class="open-add" onclick="toggleForm('sec-form')">+ Add item</button>
-    <div class="add-form" id="sec-form">
+    <button class="open-add" onclick="toggleForm('sec-add-form')">+ Add item</button>
+    <div class="add-form" id="sec-add-form">
       <input type="text" id="ni-name" placeholder="Item name"/>
       <textarea id="ni-notes" placeholder="Notes (optional)"></textarea>
-      <div id="sec-tag-area" style="display:none;">
-        <div style="font-size:11px;color:var(--ink3);margin-bottom:4px;">Tags</div>
-        <div class="tags-row" id="sec-tags-row"></div>
+      <!-- Tags (shown for tasks) -->
+      <div id="ni-tag-area" style="display:none;">
+        <div class="form-label">Tags <span style="cursor:pointer;color:var(--teal2);text-decoration:underline;font-size:11px;" onclick="openTagsModal()">Edit tags</span></div>
+        <div class="tags-select-row" id="ni-tags-row"></div>
       </div>
-      <div id="sec-linkmap-area" style="display:none;">
-        <div style="font-size:11px;color:var(--ink3);margin-bottom:4px;">Link this item → jump to section</div>
-        <div class="sec-link-row"><select id="ni-seclink"><option value="">None</option></select></div>
+      <!-- CTA link -->
+      <div id="ni-cta-area" style="display:none;">
+        <div class="form-label">On click → go to</div>
+        <select id="ni-cta-sec" onchange="loadCtaSubItems()">
+          <option value="">No redirect</option>
+        </select>
+        <select id="ni-cta-item" style="display:none;">
+          <option value="">Section home (no specific item)</option>
+        </select>
       </div>
-      <div class="form-row"><button class="btn-s" onclick="toggleForm('sec-form')">Cancel</button><button class="btn-p" onclick="addItem()">Add</button></div>
+      <div class="form-row"><button class="btn-s" onclick="toggleForm('sec-add-form')">Cancel</button><button class="btn-p" onclick="addSecItem()">Add</button></div>
     </div>
   </div>
 </div>
 
+<!-- MENU DISH PAGE (level 2 under menu) -->
 <div id="dish-page" class="page">
   <div class="ph">
-    <div class="ph-nav"><button class="back-btn" onclick="goBack()">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
-    <div class="breadcrumb" id="dish-bc"></div><div class="ph-title" id="dish-title"></div>
+    <div class="ph-nav"><button class="back-btn" onclick="goBack('dish')">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
+    <div class="breadcrumb" id="dish-bc"></div>
+    <div class="ph-title" id="dish-title"></div>
   </div>
   <div class="stats" id="dish-stats"></div>
   <div class="ilist" id="dish-items"></div>
   <div class="add-area">
-    <button class="open-add" onclick="toggleForm('dish-form')">+ Add ingredient</button>
-    <div class="add-form" id="dish-form">
-      <input type="text" id="ndi-name" placeholder="Name"/>
+    <button class="open-add" onclick="toggleForm('dish-add-form')">+ Add ingredient</button>
+    <div class="add-form" id="dish-add-form">
+      <input type="text" id="ndi-name" placeholder="Ingredient name"/>
       <textarea id="ndi-notes" placeholder="Notes (optional)"></textarea>
-      <div style="font-size:11px;color:var(--ink3);margin-bottom:2px;">Raw Materials category</div>
+      <div class="form-label">Raw Materials category</div>
       <select id="ndi-rmcat">
         <option value="misc">Miscellaneous (default)</option>
         <option value="consumable">Consumable</option>
         <option value="nonconsumable">Non-Consumable</option>
       </select>
-      <div class="form-row"><button class="btn-s" onclick="toggleForm('dish-form')">Cancel</button><button class="btn-p" onclick="addDishItem()">Add</button></div>
+      <div class="form-row"><button class="btn-s" onclick="toggleForm('dish-add-form')">Cancel</button><button class="btn-p" onclick="addDishItem()">Add</button></div>
     </div>
   </div>
 </div>
 
-<div id="sub2-page" class="page">
+<!-- DEEP PAGE (level 3+, reused recursively via stack) -->
+<div id="deep-page" class="page">
   <div class="ph">
-    <div class="ph-nav"><button class="back-btn" onclick="goToDish()">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
-    <div class="breadcrumb" id="sub2-bc"></div><div class="ph-title" id="sub2-title"></div>
+    <div class="ph-nav"><button class="back-btn" onclick="goBack('deep')">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
+    <div class="breadcrumb" id="deep-bc"></div>
+    <div class="ph-title" id="deep-title"></div>
   </div>
-  <div class="stats" id="sub2-stats"></div>
-  <div class="ilist" id="sub2-items"></div>
+  <div class="stats" id="deep-stats"></div>
+  <div class="ilist" id="deep-items"></div>
   <div class="add-area">
-    <button class="open-add" onclick="toggleForm('sub2-form')">+ Add item</button>
-    <div class="add-form" id="sub2-form">
-      <input type="text" id="ns2-name" placeholder="Name"/>
-      <textarea id="ns2-notes" placeholder="Notes (optional)"></textarea>
-      <div class="form-row"><button class="btn-s" onclick="toggleForm('sub2-form')">Cancel</button><button class="btn-p" onclick="addSub2Item()">Add</button></div>
+    <button class="open-add" onclick="toggleForm('deep-add-form')">+ Add sub-item</button>
+    <div class="add-form" id="deep-add-form">
+      <input type="text" id="ndp-name" placeholder="Name"/>
+      <textarea id="ndp-notes" placeholder="Notes (optional)"></textarea>
+      <div class="form-row"><button class="btn-s" onclick="toggleForm('deep-add-form')">Cancel</button><button class="btn-p" onclick="addDeepItem()">Add</button></div>
     </div>
   </div>
 </div>
 
+<!-- RAW MATERIALS CATEGORY PAGE -->
 <div id="rm-sec-page" class="page">
   <div class="ph">
     <div class="ph-nav"><button class="back-btn" onclick="goHome()">← Home</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
-    <div class="ph-title">🌿 Raw Materials</div><div class="ph-sub">Tap a category to view items</div>
+    <div class="ph-title">🌿 Raw Materials</div>
+    <div class="ph-sub">Tap a category to view items</div>
   </div>
   <div class="ilist" id="rm-cats"></div>
 </div>
 
 <div id="rm-cat-page" class="page">
   <div class="ph">
-    <div class="ph-nav"><button class="back-btn" onclick="showPage('rm-sec-page');renderRmSec();">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
+    <div class="ph-nav"><button class="back-btn" onclick="showPage('rm-sec-page');renderRmSec()">← Back</button><button class="home-btn" onclick="goHome()">🏠 Home</button></div>
     <div class="breadcrumb">🌿 Raw Materials › <b id="rm-cat-name"></b></div>
     <div class="ph-title" id="rm-cat-title"></div>
   </div>
   <div class="stats" id="rm-cat-stats"></div>
   <div class="ilist" id="rm-cat-items"></div>
   <div class="add-area">
-    <button class="open-add" onclick="toggleForm('rm-cat-form')">+ Add item manually</button>
-    <div class="add-form" id="rm-cat-form">
+    <button class="open-add" onclick="toggleForm('rm-add-form')">+ Add item manually</button>
+    <div class="add-form" id="rm-add-form">
       <input type="text" id="nrm-name" placeholder="Item name"/>
       <textarea id="nrm-notes" placeholder="Notes (optional)"></textarea>
-      <div class="form-row"><button class="btn-s" onclick="toggleForm('rm-cat-form')">Cancel</button><button class="btn-p" onclick="addRmItem()">Add</button></div>
+      <div class="form-row"><button class="btn-s" onclick="toggleForm('rm-add-form')">Cancel</button><button class="btn-p" onclick="addRmItem()">Add</button></div>
     </div>
   </div>
 </div>
 
-<!-- Modals -->
+<!-- MODALS -->
+<!-- Add Section -->
 <div class="modal-wrap" id="add-sec-modal">
   <div class="modal">
     <h3>New section</h3>
-    <div class="icon-row" id="ic-row"></div>
+    <div class="icon-row" id="add-sec-icons"></div>
     <input type="text" id="ns-name" placeholder="Section name"/>
     <input type="text" id="ns-desc" placeholder="Short description"/>
     <select id="ns-type">
       <option value="general">General</option>
-      <option value="tasks">Task Distribution (POC tags + section links)</option>
+      <option value="tasks">Task Distribution (tags + CTA links)</option>
       <option value="menu">Menu Curation (dish drill-down)</option>
       <option value="orders">Order Management (sheet link)</option>
       <option value="materials">Raw Materials</option>
     </select>
-    <div class="form-row" style="margin-top:4px;"><button class="btn-s" onclick="closeModal('add-sec-modal')">Cancel</button><button class="btn-p" onclick="saveNewSec()">Create</button></div>
+    <div class="form-row"><button class="btn-s" onclick="closeModal('add-sec-modal')">Cancel</button><button class="btn-p" onclick="saveNewSec()">Create</button></div>
   </div>
 </div>
 
+<!-- Manage Sections -->
 <div class="modal-wrap" id="mgr-modal">
   <div class="modal">
     <h3>Manage sections</h3>
@@ -265,22 +324,42 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
   </div>
 </div>
 
+<!-- Edit Item -->
+<div class="modal-wrap" id="edit-item-modal">
+  <div class="modal">
+    <h3>Edit item</h3>
+    <input type="text" id="ei-name" placeholder="Item name"/>
+    <textarea id="ei-notes" placeholder="Notes (optional)"></textarea>
+    <div id="ei-tag-area" style="display:none;">
+      <div class="form-label" style="margin-bottom:6px;">Tags</div>
+      <div class="tags-select-row" id="ei-tags-row"></div>
+    </div>
+    <div id="ei-cta-area" style="display:none;">
+      <div class="form-label" style="margin-bottom:4px;">On click → go to</div>
+      <select id="ei-cta-sec" onchange="loadEditCtaSubItems()" style="margin-bottom:6px;">
+        <option value="">No redirect</option>
+      </select>
+      <select id="ei-cta-item">
+        <option value="">Section home</option>
+      </select>
+    </div>
+    <div class="form-row" style="margin-top:8px;"><button class="btn-s" onclick="closeModal('edit-item-modal')">Cancel</button><button class="btn-p" onclick="saveEditItem()">Save</button></div>
+  </div>
+</div>
+
+<!-- Tags Editor -->
 <div class="modal-wrap" id="tags-modal">
   <div class="modal">
     <h3>Edit tags</h3>
     <div id="tags-editor-list"></div>
-    <div style="margin-top:14px;font-size:12px;color:var(--ink3);margin-bottom:6px;">Add new tag</div>
-    <div style="display:flex;gap:8px;margin-bottom:8px;">
-      <input type="text" id="new-tag-name" placeholder="Tag name" style="flex:1;border:1px solid var(--mint2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;margin:0;"/>
-    </div>
+    <div style="margin-top:14px;" class="form-label">Add new tag</div>
+    <input type="text" id="new-tag-name" placeholder="Tag name" style="margin-top:6px;"/>
     <div class="color-swatches" id="tag-swatches"></div>
-    <div class="form-row">
-      <button class="btn-s" onclick="closeModal('tags-modal')">Done</button>
-      <button class="btn-p" onclick="addCustomTag()">Add tag</button>
-    </div>
+    <div class="form-row"><button class="btn-s" onclick="closeModal('tags-modal')">Done</button><button class="btn-p" onclick="addCustomTag()">Add tag</button></div>
   </div>
 </div>
 
+<!-- Synced alert -->
 <div class="alert-pop" id="synced-alert">
   <div class="alert-box">
     <div class="alert-icon">🔗</div>
@@ -288,20 +367,23 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <button onclick="closeAlert()">Got it</button>
   </div>
 </div>
-</div>
+
+</div><!-- end #app -->
 
 <script>
+/* ═══════════════════════════════════════════
+   CONSTANTS & CONFIG
+═══════════════════════════════════════════ */
 const BIN_ID='69daab5636566621a8a22851';
 const API_KEY='$2a$10$5Ms12r9fbKUkzrmyLlxL.uqNxc3zrKcfICnPpTDM7kLYkBLyz0mIq';
 const BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
-const TRACKER_URL=window.location.href;
 
 const ICONS=['🌿','📋','🍽️','📦','🛒','📝','💬','🎯','🔧','📊','🌱','🥘'];
 const SEC_ACCENTS=['#4a9e80','#7ab040','#c05a28','#2d7a60','#8a5a20','#5a7a20'];
 const RM_CATS=['consumable','nonconsumable','misc'];
-const RM_CAT_LABELS={consumable:'Consumable',nonconsumable:'Non-Consumable',misc:'Miscellaneous'};
-const RM_CAT_ICONS={consumable:'🥦',nonconsumable:'🔧',misc:'📦'};
-const SWATCH_COLORS=[
+const RM_LABELS={consumable:'Consumable',nonconsumable:'Non-Consumable',misc:'Miscellaneous'};
+const RM_ICONS={consumable:'🥦',nonconsumable:'🔧',misc:'📦'};
+const SWATCHES=[
   {bg:'#e8f0ff',color:'#2a3a8a',border:'#c8d4f8'},
   {bg:'#e8f5e0',color:'#2a5a10',border:'#b8d890'},
   {bg:'#fff0e0',color:'#8a4a10',border:'#f0c880'},
@@ -311,302 +393,670 @@ const SWATCH_COLORS=[
   {bg:'#f0e8ff',color:'#5a2a8a',border:'#c8a0f0'},
   {bg:'#e8ffee',color:'#0a6a2a',border:'#80d4a0'},
 ];
-
-let selIcon=ICONS[0],selTags=[],selSwatchIdx=0,curRmCat=null;
-let curSec=null,curItem=null,curDishItem=null;
-let isSyncing=false;
+const BASE_TAGS=[
+  {k:'poc',l:'POC',bg:'#e8f0ff',color:'#2a3a8a',border:'#c8d4f8'},
+  {k:'urgent',l:'Urgent',bg:'#fce8f0',color:'#8a2a5a',border:'#f0b8d4'},
+  {k:'review',l:'Review',bg:'#f0e8ff',color:'#5a2a8a',border:'#c8a0f0'},
+  {k:'later',l:'Later',bg:'#f5f0e8',color:'#5a4a20',border:'#d4c080'},
+];
 
 const DEF_SECTIONS=[
-  {id:'s1',name:'Task Distribution',desc:'Who does what',icon:'📋',type:'tasks',accent:'#4a9e80'},
+  {id:'s1',name:'Task Distribution',desc:'Enlist all tasks and the POC',icon:'📋',type:'tasks',accent:'#4a9e80'},
   {id:'s2',name:'Menu Curation',desc:'Dishes & ingredients',icon:'🍽️',type:'menu',accent:'#7ab040'},
   {id:'s3',name:'Raw Materials',desc:'Ingredients to source',icon:'🌿',type:'materials',accent:'#c05a28'},
   {id:'s4',name:'Order Management',desc:'Track orders & sheet link',icon:'📦',type:'orders',accent:'#2d7a60'},
 ];
 
-let st={sections:DEF_SECTIONS,items:{},subitems:{},sub2items:{},rmManual:{consumable:[],nonconsumable:[],misc:[]},orderLink:'',customTags:[]};
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let st={
+  sections:DEF_SECTIONS,
+  items:{},      // sid -> [{id,name,notes,done,tags,ctaSec,ctaItem}]
+  subitems:{},   // sid_iid -> [{id,name,notes,done,rmCat}]
+  deep:{},       // arbitrary key -> [{id,name,notes,done}]
+  rmManual:{consumable:[],nonconsumable:[],misc:[]},
+  orderLink:'',
+  customTags:[]
+};
 
-function localSave(){try{localStorage.setItem('eb2_final',JSON.stringify(st));}catch(e){}}
-function localLoad(){try{const r=localStorage.getItem('eb2_final');if(r)return JSON.parse(r);}catch(e){}return null;}
+// Navigation stack for deep pages: [{key, title, parentLabel}]
+let deepStack=[];
+let curSec=null,curItem=null,curDishItem=null,curRmCat=null;
+let selAddTags=[],selEditTags=[],selSwatchIdx=0,selAddIcon=ICONS[0];
+let editCtx=null; // {level:'sec'|'dish'|'deep', secId, itemId, deepKey, idx}
+let isSyncing=false;
 
-async function syncNow(silent){
+/* ═══════════════════════════════════════════
+   PERSISTENCE
+═══════════════════════════════════════════ */
+function localSave(){try{localStorage.setItem('pvb_v5',JSON.stringify(st));}catch(e){}}
+function localLoad(){try{const r=localStorage.getItem('pvb_v5');if(r)return JSON.parse(r);}catch(e){}return null;}
+
+function migrateSt(){
+  if(!st.customTags)st.customTags=[];
+  if(!st.rmManual)st.rmManual={consumable:[],nonconsumable:[],misc:[]};
+  if(!st.deep)st.deep={};
+  const TM={'s1':'tasks','s2':'menu','s3':'materials','s4':'orders'};
+  st.sections.forEach(sec=>{
+    if(!sec.type){
+      sec.type=TM[sec.id]||'general';
+      if(!sec.type){
+        const n=sec.name.toLowerCase();
+        if(n.includes('task'))sec.type='tasks';
+        else if(n.includes('menu'))sec.type='menu';
+        else if(n.includes('raw')||n.includes('material'))sec.type='materials';
+        else if(n.includes('order'))sec.type='orders';
+        else sec.type='general';
+      }
+    }
+  });
+}
+
+async function syncNow(){
   if(isSyncing)return;
   isSyncing=true;
   const btn=document.getElementById('sync-btn');
   btn.classList.add('syncing');btn.textContent='↻ Syncing…';
   try{
-    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY}});
+    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}});
     const data=await res.json();
-    const remote=data.record;
-    if(remote&&remote.sections){
-      st=remote;
-      if(!st.customTags)st.customTags=[];
-      if(!st.rmManual)st.rmManual={consumable:[],nonconsumable:[],misc:[]};
-      localSave();
-      document.getElementById('sync-status').textContent='Last sync: '+new Date().toLocaleTimeString();
-      renderHome();
-    }
-  }catch(e){
-    document.getElementById('sync-status').textContent='Sync failed — check connection';
-  }
+    if(data.record&&data.record.sections){st=data.record;migrateSt();localSave();renderHome();}
+    document.getElementById('sync-status').textContent='Last sync: '+new Date().toLocaleTimeString();
+  }catch(e){document.getElementById('sync-status').textContent='Sync failed';}
   btn.classList.remove('syncing');btn.textContent='↻ Sync';
   isSyncing=false;
 }
 
-async function pushToCloud(){
-  try{
-    await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
-    document.getElementById('sync-status').textContent='Last sync: '+new Date().toLocaleTimeString();
-  }catch(e){
-    document.getElementById('sync-status').textContent='Save failed — check connection';
-  }
+async function pushCloud(){
+  try{await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
+  document.getElementById('sync-status').textContent='Saved: '+new Date().toLocaleTimeString();}
+  catch(e){}
   localSave();
 }
+function save(){localSave();pushCloud();}
 
-function save(){localSave();pushToCloud();}
-
-function shareWhatsApp(){
-  const lines=['🌿 *Project Vegan Bazaar — Status Update*',''];
-  let totalDone=0,totalAll=0;
-  st.sections.forEach(sec=>{
-    let its,done;
-    if(sec.type==='materials'){its=RM_CATS.flatMap(c=>getRmCatItems(c));done=its.filter(i=>i.done).length;}
-    else{its=getItems(sec.id);done=its.filter(i=>i.done).length;}
-    const pct=its.length?Math.round(done/its.length*100):0;
-    lines.push(`${done===its.length&&its.length>0?'✅':'⏳'} *${sec.name}*: ${done}/${its.length} (${pct}%)`);
-    totalDone+=done;totalAll+=its.length;
-  });
-  const overall=totalAll?Math.round(totalDone/totalAll*100):0;
-  lines.push('');
-  lines.push(`📊 *Overall: ${totalDone}/${totalAll} (${overall}%)*`);
-  lines.push('');
-  lines.push(`🔗 Tracker: ${TRACKER_URL}`);
-  window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')),'_blank');
-}
-
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+function getAllTags(){return[...BASE_TAGS,...(st.customTags||[])];}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
 function getItems(sid){return st.items[sid]||[];}
 function getSubs(sid,iid){return st.subitems[sid+'_'+iid]||[];}
+function getDeep(key){return st.deep[key]||[];}
+
 function getSyncedRM(){
   const out={consumable:[],nonconsumable:[],misc:[]};
   const m=st.sections.find(s=>s.type==='menu');if(!m)return out;
-  getItems(m.id).forEach(dish=>{getSubs(m.id,dish.id).forEach(ing=>{const cat=ing.rmCat||'misc';out[cat].push({id:ing.id,name:ing.name,notes:ing.notes||'',done:ing.done,sourceDisp:dish.name,synced:true});});});
+  getItems(m.id).forEach(dish=>{getSubs(m.id,dish.id).forEach(ing=>{
+    const cat=ing.rmCat||'misc';
+    out[cat].push({id:ing.id,name:ing.name,notes:ing.notes||'',done:ing.done,sourceDisp:dish.name,synced:true});
+  });});
   return out;
 }
 function getRmCatItems(cat){
   const synced=getSyncedRM()[cat]||[];
-  const manual=(st.rmManual[cat]||[]).map((m,i)=>({...m,_manIdx:i}));
-  return [...synced,...manual];
+  const manual=(st.rmManual[cat]||[]).map((m,i)=>({...m,_mi:i}));
+  return[...synced,...manual];
 }
-function sectionAllDone(sid){const its=getItems(sid);return its.length>0&&its.every(i=>i.done);}
-function bubbleUp(sid,iid){
+
+function sectionDoneStats(sid){
+  const sec=st.sections.find(s=>s.id===sid);
+  if(sec&&sec.type==='materials'){
+    const all=RM_CATS.flatMap(c=>getRmCatItems(c));
+    return{done:all.filter(i=>i.done).length,total:all.length};
+  }
+  const its=getItems(sid);
+  return{done:its.filter(i=>i.done).length,total:its.length};
+}
+
+/* ═══════════════════════════════════════════
+   BUBBLE UP
+═══════════════════════════════════════════ */
+function bubbleSecItem(sid,iid){
   const subs=st.subitems[sid+'_'+iid]||[];if(!subs.length)return;
   const its=st.items[sid]||[];const idx=its.findIndex(i=>i.id===iid);if(idx<0)return;
   const all=subs.every(s=>s.done);
-  if(all&&!its[idx].done)its[idx].done=true;else if(!all&&its[idx].done)its[idx].done=false;
+  if(all&&!its[idx].done)its[idx].done=true;
+  else if(!all&&its[idx].done)its[idx].done=false;
 }
-function bubbleUpSub(sid,iid,did){
-  const s2=st.sub2items[sid+'_'+iid+'_'+did]||[];if(!s2.length)return;
+function bubbleDishItem(sid,iid,did){
+  // check if all deep children done
+  const dkey=sid+'_'+iid+'_'+did;
+  const deep=st.deep[dkey]||[];if(!deep.length)return;
   const subs=st.subitems[sid+'_'+iid]||[];const idx=subs.findIndex(s=>s.id===did);if(idx<0)return;
-  const all=s2.every(s=>s.done);
-  if(all&&!subs[idx].done){subs[idx].done=true;bubbleUp(sid,iid);}
-  else if(!all&&subs[idx].done){subs[idx].done=false;bubbleUp(sid,iid);}
+  const all=deep.every(d=>d.done);
+  if(all&&!subs[idx].done){subs[idx].done=true;bubbleSecItem(sid,iid);}
+  else if(!all&&subs[idx].done){subs[idx].done=false;bubbleSecItem(sid,iid);}
 }
 
+/* ═══════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════ */
 function renderHome(){
   const g=document.getElementById('s-grid');g.innerHTML='';
   st.sections.forEach(sec=>{
-    let its,done,pct,allDone;
-    if(sec.type==='materials'){its=RM_CATS.flatMap(c=>getRmCatItems(c));done=its.filter(i=>i.done).length;pct=its.length?Math.round(done/its.length*100):0;allDone=its.length>0&&its.every(i=>i.done);}
-    else{its=getItems(sec.id);done=its.filter(i=>i.done).length;pct=its.length?Math.round(done/its.length*100):0;allDone=sectionAllDone(sec.id);}
+    const{done,total}=sectionDoneStats(sec.id);
+    const pct=total?Math.round(done/total*100):0;const allDone=total>0&&done===total;
     const d=document.createElement('div');d.className='s-card'+(allDone?' all-done':'');
-    d.innerHTML=`<div class="s-card-accent" style="background:${sec.accent||'#4a9e80'}"></div>${allDone?'<span class="done-crown">✅</span>':''}<div class="ic">${sec.icon}</div><div class="ct">${sec.name}</div><div class="cm">${sec.desc}</div><div class="cm" style="margin-top:5px;">${its.length} items · ${pct}% done</div><div class="cpbar"><div class="cpfill" style="width:${pct}%;background:${sec.accent||'#4a9e80'}"></div></div>`;
-    d.onclick=()=>sec.type==='materials'?openRmSec():openSec(sec.id);
+    d.innerHTML=`<div class="s-card-accent" style="background:${sec.accent||'#4a9e80'}"></div>${allDone?'<span class="done-crown">✅</span>':''}<div class="ic">${sec.icon}</div><div class="ct">${sec.name}</div><div class="cm">${sec.desc||''}</div><div class="cm" style="margin-top:5px;">${total} items · ${pct}% done</div><div class="cpbar"><div class="cpfill" style="width:${pct}%;background:${sec.accent||'#4a9e80'}"></div></div>`;
+    d.onclick=()=>openSection(sec.id);
     g.appendChild(d);
   });
 }
 
-function getAllTags(){
-  const base=[{k:'poc',l:'POC',bg:'#e8f0ff',color:'#2a3a8a',border:'#c8d4f8'},{k:'urgent',l:'Urgent',bg:'#fce8f0',color:'#8a2a5a',border:'#f0b8d4'},{k:'review',l:'Review',bg:'#f0e8ff',color:'#5a2a8a',border:'#c8a0f0'},{k:'done-later',l:'Later',bg:'#f5f0e8',color:'#5a4a20',border:'#d4c080'}];
-  return [...base,...(st.customTags||[])];
-}
-function renderTagOpts(){
-  const r=document.getElementById('sec-tags-row');if(!r)return;
-  const all=getAllTags();
-  r.innerHTML=all.map(t=>`<span class="tag-opt ${selTags.includes(t.k)?'sel':''}" style="background:${selTags.includes(t.k)?t.bg:'var(--cream2)'};color:${selTags.includes(t.k)?t.color:'var(--ink3)'};border-color:${selTags.includes(t.k)?t.border:'transparent'};" onclick="togTag('${t.k}')">${t.l}</span>`).join('')
-    +`<span style="font-size:11px;cursor:pointer;color:var(--teal2);text-decoration:underline;margin-left:4px;" onclick="openTagsModal()">Edit tags</span>`;
-}
-function togTag(k){if(selTags.includes(k))selTags=selTags.filter(x=>x!==k);else selTags.push(k);renderTagOpts();}
-function openTagsModal(){renderTagsEditor();openModal('tags-modal');}
-function renderTagsEditor(){
-  const all=getAllTags();const base=['poc','urgent','review','done-later'];
-  document.getElementById('tags-editor-list').innerHTML=all.map((t,i)=>`<div class="tag-editor-row"><span class="tag-preview" style="background:${t.bg};color:${t.color};border:1px solid ${t.border};">${t.l}</span><span style="flex:1;font-size:13px;">${t.l}</span>${!base.includes(t.k)?`<button onclick="delCustomTag(${i-4})" style="background:none;border:none;color:#e24b4a;font-size:16px;cursor:pointer;">×</button>`:'<span style="font-size:11px;color:var(--ink3);">default</span>'}</div>`).join('');
-  document.getElementById('tag-swatches').innerHTML=SWATCH_COLORS.map((s,i)=>`<span class="swatch ${i===selSwatchIdx?'sel':''}" style="background:${s.bg};border:2px solid ${i===selSwatchIdx?s.color:s.border};" onclick="selSwatch(${i})"></span>`).join('');
-}
-function selSwatch(i){selSwatchIdx=i;renderTagsEditor();}
-function addCustomTag(){
-  const name=document.getElementById('new-tag-name').value.trim();if(!name)return;
-  const sw=SWATCH_COLORS[selSwatchIdx];
-  if(!st.customTags)st.customTags=[];
-  st.customTags.push({k:'ct_'+Date.now(),l:name,bg:sw.bg,color:sw.color,border:sw.border});
-  document.getElementById('new-tag-name').value='';save();renderTagsEditor();renderTagOpts();
-}
-function delCustomTag(i){st.customTags.splice(i,1);save();renderTagsEditor();renderTagOpts();}
-
-function openSec(sid){
-  curSec=sid;curItem=null;curDishItem=null;selTags=[];
+/* ═══════════════════════════════════════════
+   SECTION PAGE
+═══════════════════════════════════════════ */
+function openSection(sid){
   const sec=st.sections.find(s=>s.id===sid);
+  if(sec.type==='materials'){openRmSec();return;}
+  curSec=sid;curItem=null;curDishItem=null;deepStack=[];
   document.getElementById('sec-title').textContent=sec.icon+' '+sec.name;
-  document.getElementById('sec-sub').textContent=sec.desc;
-  document.getElementById('order-box').style.display=sec.type==='orders'?'block':'none';
-  if(sec.type==='orders'){
+  document.getElementById('sec-sub').textContent=sec.desc||'';
+  // order box
+  const isOrders=sec.type==='orders';
+  document.getElementById('order-box').style.display=isOrders?'block':'none';
+  if(isOrders){
     const inp=document.getElementById('order-link-inp');inp.value=st.orderLink||'';
     inp.oninput=()=>{st.orderLink=inp.value;save();document.getElementById('link-ok').style.display=inp.value?'block':'none';};
     document.getElementById('link-ok').style.display=st.orderLink?'block':'none';
   }
+  // tags & CTA for tasks
   const isTasks=sec.type==='tasks';
-  document.getElementById('sec-tag-area').style.display=isTasks?'block':'none';
-  document.getElementById('sec-linkmap-area').style.display=isTasks?'block':'none';
-  if(isTasks){
-    renderTagOpts();
-    document.getElementById('ni-seclink').innerHTML='<option value="">None — no redirect</option>'+st.sections.filter(s=>s.id!==sid).map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
-  }
-  renderSecItems();showPage('sec-page');
+  document.getElementById('ni-tag-area').style.display=isTasks?'block':'none';
+  document.getElementById('ni-cta-area').style.display=isTasks?'block':'none';
+  if(isTasks){selAddTags=[];renderAddTagChips('ni-tags-row',selAddTags);populateCtaSecSelect('ni-cta-sec',sid);}
+  renderSecItems();
+  showPage('sec-page');
 }
+
 function renderSecItems(){
-  const its=getItems(curSec);const sec=st.sections.find(s=>s.id===curSec);const isMenu=sec&&sec.type==='menu';
-  const done=its.filter(i=>i.done).length;const allDone=its.length>0&&its.every(i=>i.done);
-  document.getElementById('sec-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${its.length-done} pending</span>`;
+  const its=getItems(curSec);
+  const sec=st.sections.find(s=>s.id===curSec);
+  const isMenu=sec&&sec.type==='menu';
+  const done=its.filter(i=>i.done).length;
+  const allDone=its.length>0&&its.every(i=>i.done);
+  document.getElementById('sec-stats').innerHTML=allDone
+    ?`<span class="stat all">🎉 All done!</span>`
+    :`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${its.length-done} pending</span>`;
   const c=document.getElementById('sec-items');
   if(!its.length){c.innerHTML='<div class="empty">No items yet — add one below.</div>';return;}
   const allT=getAllTags();
   c.innerHTML=its.map((it,idx)=>{
-    const hasLink=it.secLink&&st.sections.find(s=>s.id===it.secLink);
-    const linkSec=hasLink?st.sections.find(s=>s.id===it.secLink):null;
+    const hasCta=it.ctaSec&&st.sections.find(s=>s.id===it.ctaSec);
+    const ctaSec=hasCta?st.sections.find(s=>s.id===it.ctaSec):null;
     const tagHtml=(it.tags||[]).map(k=>{const t=allT.find(x=>x.k===k);return t?`<span class="tag" style="background:${t.bg};color:${t.color};border-color:${t.border};">${t.l}</span>`:''}).join('');
-    const clickable=isMenu||hasLink;
-    return `<div class="irow ${it.done?'done':''} ${hasLink?'has-link':''} ${isMenu?'clickable':''}" ${isMenu?`onclick="openDish(${idx})"`:hasLink?`onclick="jumpToSec('${it.secLink}')"`:''}><button class="tog ${it.done?'done':''}" onclick="togItem(event,${idx})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}${tagHtml?`<div class="tags">${tagHtml}</div>`:''}${hasLink?`<span class="link-badge">↗ ${linkSec.icon} ${linkSec.name}</span>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>${clickable?'<span class="drill">›</span>':''}<button class="del-btn" onclick="delItem(event,${idx})">×</button></div>`;
+    const clickable=isMenu||hasCta;
+    const onclick=isMenu?`openDish(${idx})`:hasCta?`ctaNav('${it.ctaSec}','${it.ctaItem||''}')`:null;
+    return `<div class="irow ${it.done?'done':''} ${clickable?'clickable':''}" ${onclick?`onclick="${onclick}"`:''}>
+      <button class="tog ${it.done?'done':''}" onclick="togSecItem(event,${idx})"></button>
+      <div class="icontent">
+        <div class="iname">${it.name}</div>
+        ${it.notes?`<div class="inotes">${it.notes}</div>`:''}
+        ${tagHtml?`<div class="tags-wrap">${tagHtml}</div>`:''}
+        ${hasCta?`<span class="link-badge">↗ ${ctaSec.icon} ${ctaSec.name}${it.ctaItem?' › item':''}</span>`:''}
+      </div>
+      <span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>
+      ${clickable?'<span class="drill">›</span>':''}
+      <div class="row-actions">
+        <button class="edit-btn" onclick="openEditItem(event,'sec',${idx})">✎</button>
+        <button class="del-btn" onclick="delSecItem(event,${idx})">×</button>
+      </div>
+    </div>`;
   }).join('');
 }
-function togItem(e,idx){e.stopPropagation();if(!st.items[curSec])return;st.items[curSec][idx].done=!st.items[curSec][idx].done;save();renderSecItems();renderHome();}
-function delItem(e,idx){e.stopPropagation();if(!confirm('Delete?'))return;st.items[curSec].splice(idx,1);save();renderSecItems();renderHome();}
-function jumpToSec(sid){openSec(sid);}
-function addItem(){
+
+function togSecItem(e,idx){
+  e.stopPropagation();
+  if(!st.items[curSec])return;
+  st.items[curSec][idx].done=!st.items[curSec][idx].done;
+  save();renderSecItems();renderHome();
+}
+function delSecItem(e,idx){
+  e.stopPropagation();if(!confirm('Delete?'))return;
+  st.items[curSec].splice(idx,1);save();renderSecItems();renderHome();
+}
+function addSecItem(){
   const name=document.getElementById('ni-name').value.trim();if(!name)return;
   const notes=document.getElementById('ni-notes').value.trim();
-  const secLink=document.getElementById('ni-seclink')?document.getElementById('ni-seclink').value:'';
+  const ctaSec=document.getElementById('ni-cta-sec')?document.getElementById('ni-cta-sec').value:'';
+  const ctaItem=document.getElementById('ni-cta-item')?document.getElementById('ni-cta-item').value:'';
   if(!st.items[curSec])st.items[curSec]=[];
-  st.items[curSec].push({id:'i'+Date.now(),name,notes,done:false,tags:[...selTags],secLink});
-  save();selTags=[];document.getElementById('ni-name').value='';document.getElementById('ni-notes').value='';
-  if(document.getElementById('ni-seclink'))document.getElementById('ni-seclink').value='';
-  renderTagOpts();toggleForm('sec-form');renderSecItems();renderHome();
+  st.items[curSec].push({id:uid(),name,notes,done:false,tags:[...selAddTags],ctaSec,ctaItem});
+  save();selAddTags=[];
+  document.getElementById('ni-name').value='';document.getElementById('ni-notes').value='';
+  if(document.getElementById('ni-cta-sec'))document.getElementById('ni-cta-sec').value='';
+  if(document.getElementById('ni-cta-item')){document.getElementById('ni-cta-item').value='';document.getElementById('ni-cta-item').style.display='none';}
+  renderAddTagChips('ni-tags-row',selAddTags);
+  toggleForm('sec-add-form');renderSecItems();renderHome();
 }
+
+/* CTA navigation */
+function ctaNav(secId,itemId){
+  const sec=st.sections.find(s=>s.id===secId);if(!sec)return;
+  if(sec.type==='materials'){openRmSec();return;}
+  if(!itemId){openSection(secId);return;}
+  // go to section then open specific item
+  openSection(secId);
+  const items=getItems(secId);
+  const idx=items.findIndex(i=>i.id===itemId);
+  if(idx>=0){
+    if(sec.type==='menu')setTimeout(()=>openDish(idx),50);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   DISH PAGE (Menu Level 2)
+═══════════════════════════════════════════ */
 function openDish(idx){
   curItem={idx,id:getItems(curSec)[idx].id};
-  const sec=st.sections.find(s=>s.id===curSec);const it=getItems(curSec)[idx];
+  const sec=st.sections.find(s=>s.id===curSec);
+  const it=getItems(curSec)[idx];
   document.getElementById('dish-bc').innerHTML=`<b>${sec.name}</b> › ${it.name}`;
   document.getElementById('dish-title').textContent=it.name;
   renderDishItems();showPage('dish-page');
 }
+
 function renderDishItems(){
-  const subs=getSubs(curSec,curItem.id);const done=subs.filter(i=>i.done).length;const allDone=subs.length>0&&subs.every(i=>i.done);
+  const subs=getSubs(curSec,curItem.id);
+  const done=subs.filter(i=>i.done).length;const allDone=subs.length>0&&subs.every(i=>i.done);
   document.getElementById('dish-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${subs.length-done} pending</span>`;
   const c=document.getElementById('dish-items');
   if(!subs.length){c.innerHTML='<div class="empty">No ingredients yet.</div>';return;}
-  c.innerHTML=subs.map((sub,idx)=>`<div class="irow ${sub.done?'done':''} clickable" onclick="openSub2(${idx})"><button class="tog ${sub.done?'done':''}" onclick="togSub(event,${idx})"></button><div class="icontent"><div class="iname">${sub.name}</div>${sub.notes?`<div class="inotes">${sub.notes}</div>`:''}<div class="tags"><span class="tag ${sub.rmCat||'misc'}">${RM_CAT_LABELS[sub.rmCat||'misc']}</span></div></div><span class="sbadge ${sub.done?'d':'p'}">${sub.done?'Done':'Pending'}</span><span class="drill">›</span><button class="del-btn" onclick="delSub(event,${idx})">×</button></div>`).join('');
+  c.innerHTML=subs.map((sub,idx)=>`
+    <div class="irow ${sub.done?'done':''} clickable" onclick="openDeep('${curSec}_${curItem.id}_${sub.id}','${sub.name}','${curItem.id}',${idx})">
+      <button class="tog ${sub.done?'done':''}" onclick="togDishItem(event,${idx})"></button>
+      <div class="icontent">
+        <div class="iname">${sub.name}</div>
+        ${sub.notes?`<div class="inotes">${sub.notes}</div>`:''}
+        <div class="tags-wrap"><span class="tag ${sub.rmCat||'misc'}">${RM_LABELS[sub.rmCat||'misc']}</span></div>
+      </div>
+      <span class="sbadge ${sub.done?'d':'p'}">${sub.done?'Done':'Pending'}</span>
+      <span class="drill">›</span>
+      <div class="row-actions">
+        <button class="edit-btn" onclick="openEditItem(event,'dish',${idx})">✎</button>
+        <button class="del-btn" onclick="delDishItem(event,${idx})">×</button>
+      </div>
+    </div>`).join('');
 }
-function togSub(e,idx){e.stopPropagation();const key=curSec+'_'+curItem.id;if(!st.subitems[key])return;st.subitems[key][idx].done=!st.subitems[key][idx].done;save();bubbleUp(curSec,curItem.id);renderDishItems();renderSecItems();renderHome();}
-function delSub(e,idx){e.stopPropagation();if(!confirm('Delete?'))return;const key=curSec+'_'+curItem.id;st.subitems[key].splice(idx,1);save();bubbleUp(curSec,curItem.id);renderDishItems();renderSecItems();renderHome();}
+
+function togDishItem(e,idx){
+  e.stopPropagation();const key=curSec+'_'+curItem.id;if(!st.subitems[key])return;
+  st.subitems[key][idx].done=!st.subitems[key][idx].done;
+  save();bubbleSecItem(curSec,curItem.id);renderDishItems();renderSecItems();renderHome();
+}
+function delDishItem(e,idx){
+  e.stopPropagation();if(!confirm('Delete?'))return;
+  const key=curSec+'_'+curItem.id;st.subitems[key].splice(idx,1);
+  save();bubbleSecItem(curSec,curItem.id);renderDishItems();renderSecItems();renderHome();
+}
 function addDishItem(){
   const name=document.getElementById('ndi-name').value.trim();if(!name)return;
-  const notes=document.getElementById('ndi-notes').value.trim();const rmCat=document.getElementById('ndi-rmcat').value||'misc';
-  const key=curSec+'_'+curItem.id;if(!st.subitems[key])st.subitems[key]=[];
-  st.subitems[key].push({id:'d'+Date.now(),name,notes,done:false,rmCat});
+  const notes=document.getElementById('ndi-notes').value.trim();
+  const rmCat=document.getElementById('ndi-rmcat').value||'misc';
+  const key=curSec+'_'+curItem.id;
+  if(!st.subitems[key])st.subitems[key]=[];
+  st.subitems[key].push({id:uid(),name,notes,done:false,rmCat});
   save();document.getElementById('ndi-name').value='';document.getElementById('ndi-notes').value='';document.getElementById('ndi-rmcat').value='misc';
-  toggleForm('dish-form');renderDishItems();
+  toggleForm('dish-add-form');renderDishItems();
 }
-function openSub2(idx){
-  const subs=getSubs(curSec,curItem.id);curDishItem={idx,id:subs[idx].id};
-  const sec=st.sections.find(s=>s.id===curSec);const it=getItems(curSec)[curItem.idx];const sub=subs[idx];
-  document.getElementById('sub2-bc').innerHTML=`<b>${sec.name}</b> › ${it.name} › ${sub.name}`;
-  document.getElementById('sub2-title').textContent=sub.name;renderSub2();showPage('sub2-page');
+
+/* ═══════════════════════════════════════════
+   DEEP PAGE (Level 3+, unlimited nesting)
+═══════════════════════════════════════════ */
+// deepStack entries: {key, title, breadcrumb}
+function openDeep(key,title,parentIid,parentIdx){
+  deepStack.push({key,title,parentIid,parentIdx});
+  renderDeepPage();
+  showPage('deep-page');
 }
-function renderSub2(){
-  const key=curSec+'_'+curItem.id+'_'+curDishItem.id;const its=st.sub2items[key]||[];
+
+function renderDeepPage(){
+  const frame=deepStack[deepStack.length-1];
+  const its=getDeep(frame.key);
+  // breadcrumb
+  const sec=st.sections.find(s=>s.id===curSec);
+  const dish=curItem?getItems(curSec)[curItem.idx]:null;
+  let bc=`<b>${sec?sec.name:''}</b>`;
+  if(dish)bc+=` › ${dish.name}`;
+  deepStack.slice(0,-1).forEach(f=>bc+=` › ${f.title}`);
+  document.getElementById('deep-bc').innerHTML=bc;
+  document.getElementById('deep-title').textContent=frame.title;
+
   const done=its.filter(i=>i.done).length;const allDone=its.length>0&&its.every(i=>i.done);
-  document.getElementById('sub2-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${its.length-done} pending</span>`;
-  const c=document.getElementById('sub2-items');
-  if(!its.length){c.innerHTML='<div class="empty">No items here yet.</div>';return;}
-  c.innerHTML=its.map((it,idx)=>`<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togSub2(${idx})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><button class="del-btn" onclick="delSub2(${idx})">×</button></div>`).join('');
+  document.getElementById('deep-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${its.length-done} pending</span>`;
+  const c=document.getElementById('deep-items');
+  if(!its.length){c.innerHTML='<div class="empty">No items yet — add one below.</div>';return;}
+  c.innerHTML=its.map((it,idx)=>`
+    <div class="irow ${it.done?'done':''} clickable" onclick="openDeep('${frame.key}_${it.id}','${it.name}',null,${idx})">
+      <button class="tog ${it.done?'done':''}" onclick="togDeepItem(event,'${frame.key}',${idx})"></button>
+      <div class="icontent">
+        <div class="iname">${it.name}</div>
+        ${it.notes?`<div class="inotes">${it.notes}</div>`:''}
+      </div>
+      <span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>
+      <span class="drill">›</span>
+      <div class="row-actions">
+        <button class="edit-btn" onclick="openEditItem(event,'deep',${idx})">✎</button>
+        <button class="del-btn" onclick="delDeepItem(event,'${frame.key}',${idx})">×</button>
+      </div>
+    </div>`).join('');
 }
-function togSub2(idx){const key=curSec+'_'+curItem.id+'_'+curDishItem.id;if(!st.sub2items[key])return;st.sub2items[key][idx].done=!st.sub2items[key][idx].done;save();bubbleUpSub(curSec,curItem.id,curDishItem.id);renderSub2();renderDishItems();renderSecItems();renderHome();}
-function delSub2(idx){if(!confirm('Delete?'))return;const key=curSec+'_'+curItem.id+'_'+curDishItem.id;st.sub2items[key].splice(idx,1);save();bubbleUpSub(curSec,curItem.id,curDishItem.id);renderSub2();renderDishItems();renderSecItems();renderHome();}
-function addSub2Item(){
-  const name=document.getElementById('ns2-name').value.trim();if(!name)return;
-  const notes=document.getElementById('ns2-notes').value.trim();const key=curSec+'_'+curItem.id+'_'+curDishItem.id;
-  if(!st.sub2items[key])st.sub2items[key]=[];st.sub2items[key].push({name,notes,done:false});
-  save();document.getElementById('ns2-name').value='';document.getElementById('ns2-notes').value='';toggleForm('sub2-form');renderSub2();
+
+function togDeepItem(e,key,idx){
+  e.stopPropagation();if(!st.deep[key])return;
+  st.deep[key][idx].done=!st.deep[key][idx].done;
+  save();
+  // bubble up through dish if applicable
+  if(curItem&&curDishItem)bubbleDishItem(curSec,curItem.id,curDishItem);
+  renderDeepPage();renderHome();
 }
-function openRmSec(){renderRmSec();showPage('rm-sec-page');}
-function renderRmSec(){
-  const c=document.getElementById('rm-cats');c.innerHTML='';
-  RM_CATS.forEach(cat=>{
-    const all=getRmCatItems(cat);const done=all.filter(i=>i.done).length;const pct=all.length?Math.round(done/all.length*100):0;const allDone=all.length>0&&done===all.length;
-    const row=document.createElement('div');row.className='irow clickable'+(allDone?' done':'');
-    row.innerHTML=`<div class="icontent"><div class="iname">${RM_CAT_ICONS[cat]} ${RM_CAT_LABELS[cat]}</div><div class="inotes">${done}/${all.length} done</div></div><span class="sbadge ${allDone?'d':'p'}">${pct}%</span><span class="drill">›</span>`;
-    row.onclick=()=>openRmCat(cat);c.appendChild(row);
-  });
+function delDeepItem(e,key,idx){
+  e.stopPropagation();if(!confirm('Delete?'))return;
+  st.deep[key].splice(idx,1);save();renderDeepPage();
 }
-function openRmCat(cat){
-  curRmCat=cat;document.getElementById('rm-cat-name').textContent=RM_CAT_LABELS[cat];document.getElementById('rm-cat-title').textContent=RM_CAT_ICONS[cat]+' '+RM_CAT_LABELS[cat];
-  renderRmCatItems();showPage('rm-cat-page');
+function addDeepItem(){
+  const name=document.getElementById('ndp-name').value.trim();if(!name)return;
+  const notes=document.getElementById('ndp-notes').value.trim();
+  const frame=deepStack[deepStack.length-1];
+  if(!st.deep[frame.key])st.deep[frame.key]=[];
+  st.deep[frame.key].push({id:uid(),name,notes,done:false});
+  save();document.getElementById('ndp-name').value='';document.getElementById('ndp-notes').value='';
+  toggleForm('deep-add-form');renderDeepPage();
 }
-function renderRmCatItems(){
-  const all=getRmCatItems(curRmCat);const done=all.filter(i=>i.done).length;const allDone=all.length>0&&all.every(i=>i.done);
-  document.getElementById('rm-cat-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${all.length-done} pending</span>`;
-  const c=document.getElementById('rm-cat-items');
-  if(!all.length){c.innerHTML='<div class="empty">No items here yet.</div>';return;}
-  c.innerHTML=all.map(it=>{
-    if(it.synced)return `<div class="irow ${it.done?'done':''} synced" onclick="showAlert()"><button class="tog readonly ${it.done?'done':''}" onclick="showAlert();event.stopPropagation()"></button><div class="icontent"><div class="iname">${it.name}</div>${it.sourceDisp?`<div class="inotes">From: ${it.sourceDisp}</div>`:''}<span class="sync-badge">🔗 Synced from Menu Curation</span></div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span></div>`;
-    const manIdx=it._manIdx;
-    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${manIdx})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><button class="del-btn" onclick="delRmManual(${manIdx})">×</button></div>`;
+
+/* ═══════════════════════════════════════════
+   EDIT ITEM (Feature 4 — edit any item)
+═══════════════════════════════════════════ */
+function openEditItem(e,level,idx){
+  e.stopPropagation();
+  editCtx={level,idx};
+  let it;
+  if(level==='sec'){it=getItems(curSec)[idx];}
+  else if(level==='dish'){it=getSubs(curSec,curItem.id)[idx];}
+  else if(level==='deep'){const frame=deepStack[deepStack.length-1];it=getDeep(frame.key)[idx];}
+  if(!it)return;
+  document.getElementById('ei-name').value=it.name||'';
+  document.getElementById('ei-notes').value=it.notes||'';
+  const sec=st.sections.find(s=>s.id===curSec);
+  const isTasks=sec&&sec.type==='tasks'&&level==='sec';
+  document.getElementById('ei-tag-area').style.display=isTasks?'block':'none';
+  document.getElementById('ei-cta-area').style.display=isTasks?'block':'none';
+  if(isTasks){
+    selEditTags=[...(it.tags||[])];
+    renderAddTagChips('ei-tags-row',selEditTags,true);
+    populateCtaSecSelect('ei-cta-sec',curSec);
+    document.getElementById('ei-cta-sec').value=it.ctaSec||'';
+    loadEditCtaSubItems();
+    setTimeout(()=>{if(it.ctaItem)document.getElementById('ei-cta-item').value=it.ctaItem;},50);
+  }
+  openModal('edit-item-modal');
+}
+
+function saveEditItem(){
+  const name=document.getElementById('ei-name').value.trim();if(!name)return;
+  const notes=document.getElementById('ei-notes').value.trim();
+  const{level,idx}=editCtx;
+  let it;
+  if(level==='sec'){it=st.items[curSec][idx];}
+  else if(level==='dish'){it=st.subitems[curSec+'_'+curItem.id][idx];}
+  else if(level==='deep'){const frame=deepStack[deepStack.length-1];it=st.deep[frame.key][idx];}
+  if(!it)return;
+  it.name=name;it.notes=notes;
+  const sec=st.sections.find(s=>s.id===curSec);
+  if(sec&&sec.type==='tasks'&&level==='sec'){
+    it.tags=[...selEditTags];
+    it.ctaSec=document.getElementById('ei-cta-sec').value||'';
+    it.ctaItem=document.getElementById('ei-cta-item').value||'';
+  }
+  save();closeModal('edit-item-modal');
+  if(level==='sec')renderSecItems();
+  else if(level==='dish')renderDishItems();
+  else renderDeepPage();
+}
+
+/* ═══════════════════════════════════════════
+   CTA SELECTS
+═══════════════════════════════════════════ */
+function populateCtaSecSelect(elId,excludeSid){
+  const sel=document.getElementById(elId);if(!sel)return;
+  sel.innerHTML='<option value="">No redirect</option>'+
+    st.sections.filter(s=>s.id!==excludeSid).map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+}
+function loadCtaSubItems(){
+  const secId=document.getElementById('ni-cta-sec').value;
+  const itemSel=document.getElementById('ni-cta-item');
+  if(!secId){itemSel.style.display='none';return;}
+  itemSel.style.display='block';
+  const its=getItems(secId);
+  itemSel.innerHTML='<option value="">Section home (no specific item)</option>'+
+    its.map(it=>`<option value="${it.id}">${it.name}</option>`).join('');
+}
+function loadEditCtaSubItems(){
+  const secId=document.getElementById('ei-cta-sec').value;
+  const itemSel=document.getElementById('ei-cta-item');
+  if(!secId){itemSel.style.display='none';return;}
+  itemSel.style.display='block';
+  const its=getItems(secId);
+  itemSel.innerHTML='<option value="">Section home (no specific item)</option>'+
+    its.map(it=>`<option value="${it.id}">${it.name}</option>`).join('');
+}
+
+/* ═══════════════════════════════════════════
+   TAGS
+═══════════════════════════════════════════ */
+function renderAddTagChips(containerId,selArr,isEdit){
+  const c=document.getElementById(containerId);if(!c)return;
+  const all=getAllTags();
+  const arr=isEdit?selEditTags:selAddTags;
+  c.innerHTML=all.map(t=>{
+    const on=arr.includes(t.k);
+    return `<span class="tag-chip ${on?'sel':''}" style="background:${on?t.bg:'var(--cream2)'};color:${on?t.color:'var(--ink3)'};border-color:${on?t.border:'transparent'};" onclick="togChip('${t.k}','${containerId}',${isEdit?'true':'false'})">${t.l}</span>`;
   }).join('');
 }
-function togRmManual(idx){st.rmManual[curRmCat][idx].done=!st.rmManual[curRmCat][idx].done;save();renderRmCatItems();renderHome();}
-function delRmManual(idx){if(!confirm('Delete?'))return;st.rmManual[curRmCat].splice(idx,1);save();renderRmCatItems();renderHome();}
-function addRmItem(){
-  const name=document.getElementById('nrm-name').value.trim();if(!name)return;
-  const notes=document.getElementById('nrm-notes').value.trim();if(!st.rmManual[curRmCat])st.rmManual[curRmCat]=[];
-  st.rmManual[curRmCat].push({name,notes,done:false});save();document.getElementById('nrm-name').value='';document.getElementById('nrm-notes').value='';toggleForm('rm-cat-form');renderRmCatItems();renderHome();
+function togChip(k,containerId,isEdit){
+  const arr=isEdit?selEditTags:selAddTags;
+  if(arr.includes(k))arr.splice(arr.indexOf(k),1);else arr.push(k);
+  renderAddTagChips(containerId,arr,isEdit);
 }
-function openOrderLink(){const url=document.getElementById('order-link-inp').value.trim();if(!url)return alert('Paste a link first.');window.open(url,'_blank');}
-function openAddSec(){
-  selIcon=ICONS[0];document.getElementById('ic-row').innerHTML=ICONS.map((ic,i)=>`<span class="ic-opt ${i===0?'sel':''}" onclick="selIc('${ic}',this)">${ic}</span>`).join('');
-  document.getElementById('ns-name').value='';document.getElementById('ns-desc').value='';document.getElementById('ns-type').value='general';openModal('add-sec-modal');
+function openTagsModal(){renderTagsEditor();openModal('tags-modal');}
+function renderTagsEditor(){
+  const all=getAllTags();const baseKeys=BASE_TAGS.map(t=>t.k);
+  document.getElementById('tags-editor-list').innerHTML=all.map((t,i)=>`
+    <div class="tag-editor-row">
+      <span class="tag-preview" style="background:${t.bg};color:${t.color};border:1px solid ${t.border};">${t.l}</span>
+      <span style="flex:1;font-size:13px;margin-left:8px;">${t.l}</span>
+      ${!baseKeys.includes(t.k)?`<button onclick="delCustomTag(${i-BASE_TAGS.length})" style="background:none;border:none;color:#e24b4a;font-size:16px;cursor:pointer;">×</button>`:'<span style="font-size:11px;color:var(--ink3);">default</span>'}
+    </div>`).join('');
+  document.getElementById('tag-swatches').innerHTML=SWATCHES.map((s,i)=>`<span class="swatch ${i===selSwatchIdx?'sel':''}" style="background:${s.bg};border:2px solid ${i===selSwatchIdx?s.color:s.border};" onclick="selSwatch(${i})"></span>`).join('');
 }
-function selIc(ic,el){selIcon=ic;document.querySelectorAll('.ic-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
+function selSwatch(i){selSwatchIdx=i;renderTagsEditor();}
+function addCustomTag(){
+  const name=document.getElementById('new-tag-name').value.trim();if(!name)return;
+  const sw=SWATCHES[selSwatchIdx];
+  if(!st.customTags)st.customTags=[];
+  st.customTags.push({k:'ct_'+uid(),l:name,bg:sw.bg,color:sw.color,border:sw.border});
+  document.getElementById('new-tag-name').value='';save();renderTagsEditor();
+  renderAddTagChips('ni-tags-row',selAddTags);
+  renderAddTagChips('ei-tags-row',selEditTags,true);
+}
+function delCustomTag(i){
+  st.customTags.splice(i,1);save();renderTagsEditor();
+  renderAddTagChips('ni-tags-row',selAddTags);
+}
+
+/* ═══════════════════════════════════════════
+   MANAGE SECTIONS (Feature 1 — full edit)
+═══════════════════════════════════════════ */
+function openMgrModal(){
+  renderMgrList();openModal('mgr-modal');
+}
+function renderMgrList(){
+  const list=document.getElementById('mgr-list');
+  list.innerHTML=st.sections.map((sec,i)=>`
+    <div class="mgr-row">
+      <div class="mgr-row-top">
+        <span class="ic">${sec.icon}</span>
+        <span class="nm">${sec.name}</span>
+        <button class="mgr-edit-btn" onclick="toggleMgrEdit(${i})">Edit</button>
+        <button class="mgr-del-btn" onclick="delSec(${i})">×</button>
+      </div>
+      <div class="mgr-edit-form" id="mgr-edit-${i}">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;" id="mgr-icons-${i}"></div>
+        <input type="text" id="mgr-name-${i}" value="${sec.name}" placeholder="Name"/>
+        <input type="text" id="mgr-desc-${i}" value="${sec.desc||''}" placeholder="Description"/>
+        <select id="mgr-type-${i}">
+          <option value="general" ${sec.type==='general'?'selected':''}>General</option>
+          <option value="tasks" ${sec.type==='tasks'?'selected':''}>Task Distribution</option>
+          <option value="menu" ${sec.type==='menu'?'selected':''}>Menu Curation</option>
+          <option value="orders" ${sec.type==='orders'?'selected':''}>Order Management</option>
+          <option value="materials" ${sec.type==='materials'?'selected':''}>Raw Materials</option>
+        </select>
+        <div class="form-row">
+          <button class="btn-s" onclick="toggleMgrEdit(${i})">Cancel</button>
+          <button class="btn-p" onclick="saveMgrEdit(${i})">Save</button>
+        </div>
+      </div>
+    </div>`).join('');
+  // populate icon pickers per row
+  st.sections.forEach((sec,i)=>{
+    const el=document.getElementById('mgr-icons-'+i);if(!el)return;
+    el.innerHTML=ICONS.map(ic=>`<span class="ic-opt ${ic===sec.icon?'sel':''}" onclick="selMgrIcon('${ic}',${i})">${ic}</span>`).join('');
+  });
+}
+let mgrSelIcons={};
+function selMgrIcon(ic,i){
+  mgrSelIcons[i]=ic;
+  document.querySelectorAll(`#mgr-icons-${i} .ic-opt`).forEach(el=>{el.classList.toggle('sel',el.textContent===ic);});
+}
+function toggleMgrEdit(i){
+  const el=document.getElementById('mgr-edit-'+i);el.classList.toggle('open');
+  mgrSelIcons[i]=st.sections[i].icon;
+}
+function saveMgrEdit(i){
+  const name=document.getElementById('mgr-name-'+i).value.trim();if(!name)return;
+  st.sections[i].name=name;
+  st.sections[i].desc=document.getElementById('mgr-desc-'+i).value.trim();
+  st.sections[i].type=document.getElementById('mgr-type-'+i).value;
+  st.sections[i].icon=mgrSelIcons[i]||st.sections[i].icon;
+  save();renderMgrList();renderHome();
+}
+function delSec(i){
+  if(!confirm('Delete "'+st.sections[i].name+'"?'))return;
+  st.sections.splice(i,1);save();renderMgrList();renderHome();
+}
+
+/* ═══════════════════════════════════════════
+   ADD SECTION MODAL
+═══════════════════════════════════════════ */
+function openAddSecModal(){
+  selAddIcon=ICONS[0];
+  document.getElementById('add-sec-icons').innerHTML=ICONS.map((ic,i)=>`<span class="ic-opt ${i===0?'sel':''}" onclick="selAddSecIcon('${ic}',this)">${ic}</span>`).join('');
+  document.getElementById('ns-name').value='';document.getElementById('ns-desc').value='';document.getElementById('ns-type').value='general';
+  openModal('add-sec-modal');
+}
+function selAddSecIcon(ic,el){selAddIcon=ic;document.querySelectorAll('#add-sec-icons .ic-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');}
 function saveNewSec(){
   const name=document.getElementById('ns-name').value.trim();if(!name)return;
   const desc=document.getElementById('ns-desc').value.trim();const type=document.getElementById('ns-type').value;
   const accent=SEC_ACCENTS[st.sections.length%SEC_ACCENTS.length];
-  st.sections.push({id:'s'+Date.now(),name,desc,icon:selIcon,type,accent});save();closeModal('add-sec-modal');renderHome();
+  st.sections.push({id:'s'+uid(),name,desc,icon:selAddIcon,type,accent});
+  save();closeModal('add-sec-modal');renderHome();
 }
-function showMgr(){
-  document.getElementById('mgr-list').innerHTML=st.sections.map((s,i)=>`<div class="mgr-row"><span style="font-size:20px;">${s.icon}</span><span>${s.name}</span><button onclick="delSec(${i})" style="background:none;border:none;color:#e24b4a;font-size:18px;cursor:pointer;">×</button></div>`).join('');
-  openModal('mgr-modal');
+
+/* ═══════════════════════════════════════════
+   RAW MATERIALS
+═══════════════════════════════════════════ */
+function openRmSec(){renderRmSec();showPage('rm-sec-page');}
+function renderRmSec(){
+  const c=document.getElementById('rm-cats');c.innerHTML='';
+  RM_CATS.forEach(cat=>{
+    const all=getRmCatItems(cat);const done=all.filter(i=>i.done).length;
+    const pct=all.length?Math.round(done/all.length*100):0;const allDone=all.length>0&&done===all.length;
+    const row=document.createElement('div');row.className='irow rm-cat-row'+(allDone?' done':'');
+    row.innerHTML=`<div class="icontent"><div class="iname">${RM_ICONS[cat]} ${RM_LABELS[cat]}</div><div class="inotes">${done}/${all.length} done</div></div><span class="sbadge ${allDone?'d':'p'}">${pct}%</span><span class="drill">›</span>`;
+    row.onclick=()=>openRmCat(cat);c.appendChild(row);
+  });
 }
-function delSec(i){if(!confirm('Delete "'+st.sections[i].name+'"?'))return;st.sections.splice(i,1);save();showMgr();renderHome();}
-function showAlert(){document.getElementById('synced-alert').classList.add('open');}
-function closeAlert(){document.getElementById('synced-alert').classList.remove('open');}
-function toggleForm(id){document.getElementById(id).classList.toggle('open');}
+function openRmCat(cat){
+  curRmCat=cat;
+  document.getElementById('rm-cat-name').textContent=RM_LABELS[cat];
+  document.getElementById('rm-cat-title').textContent=RM_ICONS[cat]+' '+RM_LABELS[cat];
+  renderRmCatItems();showPage('rm-cat-page');
+}
+function renderRmCatItems(){
+  const all=getRmCatItems(curRmCat);
+  const done=all.filter(i=>i.done).length;const allDone=all.length>0&&all.every(i=>i.done);
+  document.getElementById('rm-cat-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${all.length-done} pending</span>`;
+  const c=document.getElementById('rm-cat-items');
+  if(!all.length){c.innerHTML='<div class="empty">No items here yet.</div>';return;}
+  c.innerHTML=all.map(it=>{
+    if(it.synced)return `<div class="irow synced" onclick="showAlert()"><button class="tog readonly ${it.done?'done':''}" onclick="showAlert();event.stopPropagation()"></button><div class="icontent"><div class="iname">${it.name}</div>${it.sourceDisp?`<div class="inotes">From: ${it.sourceDisp}</div>`:''}<span class="sync-badge">🔗 Synced from Menu Curation</span></div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span></div>`;
+    const mi=it._mi;
+    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${mi})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><button class="del-btn" onclick="delRmManual(${mi})">×</button></div>`;
+  }).join('');
+}
+function togRmManual(i){st.rmManual[curRmCat][i].done=!st.rmManual[curRmCat][i].done;save();renderRmCatItems();renderHome();}
+function delRmManual(i){if(!confirm('Delete?'))return;st.rmManual[curRmCat].splice(i,1);save();renderRmCatItems();renderHome();}
+function addRmItem(){
+  const name=document.getElementById('nrm-name').value.trim();if(!name)return;
+  const notes=document.getElementById('nrm-notes').value.trim();
+  if(!st.rmManual[curRmCat])st.rmManual[curRmCat]=[];
+  st.rmManual[curRmCat].push({name,notes,done:false});
+  save();document.getElementById('nrm-name').value='';document.getElementById('nrm-notes').value='';
+  toggleForm('rm-add-form');renderRmCatItems();renderHome();
+}
+
+/* ═══════════════════════════════════════════
+   WHATSAPP
+═══════════════════════════════════════════ */
+function shareWhatsApp(){
+  const lines=['🌿 *Project Vegan Bazaar — Status Update*',''];
+  let td=0,ta=0;
+  st.sections.forEach(sec=>{
+    const{done,total}=sectionDoneStats(sec.id);
+    const pct=total?Math.round(done/total*100):0;
+    lines.push(`${done===total&&total>0?'✅':'⏳'} *${sec.name}*: ${done}/${total} (${pct}%)`);
+    td+=done;ta+=total;
+  });
+  lines.push('');lines.push(`📊 *Overall: ${td}/${ta} (${ta?Math.round(td/ta*100):0}%)*`);
+  lines.push('');lines.push(`🔗 Tracker: ${window.location.href}`);
+  window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')),'_blank');
+}
+
+/* ═══════════════════════════════════════════
+   NAV HELPERS
+═══════════════════════════════════════════ */
+function goBack(from){
+  if(from==='deep'){
+    deepStack.pop();
+    if(deepStack.length>0){renderDeepPage();}
+    else if(curItem!==null){showPage('dish-page');renderDishItems();}
+    else{showPage('sec-page');renderSecItems();}
+    return;
+  }
+  if(from==='dish'){curItem=null;showPage('sec-page');renderSecItems();return;}
+  goHome();
+}
+function goHome(){deepStack=[];curSec=null;curItem=null;curDishItem=null;showPage('home-page');renderHome();}
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function goHome(){showPage('home-page');renderHome();}
-function goBack(){curItem=null;curDishItem=null;showPage('sec-page');renderSecItems();}
-function goToDish(){curDishItem=null;showPage('dish-page');renderDishItems();}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+function toggleForm(id){document.getElementById(id).classList.toggle('open');}
+function showAlert(){document.getElementById('synced-alert').classList.add('open');}
+function closeAlert(){document.getElementById('synced-alert').classList.remove('open');}
+function openOrderLink(){const url=document.getElementById('order-link-inp').value.trim();if(!url)return alert('Paste a link first.');window.open(url,'_blank');}
 
-const cached=localLoad();if(cached){st=cached;if(!st.customTags)st.customTags=[];if(!st.rmManual)st.rmManual={consumable:[],nonconsumable:[],misc:[]};}
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+const cached=localLoad();
+if(cached){st=cached;}
+migrateSt();
+localSave();
 renderHome();
-syncNow(true);
+syncNow();
 </script>
 </body>
 </html>
