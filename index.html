@@ -177,7 +177,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
   <div class="texture-strip"></div>
   <div class="home-actions">
     <button class="sync-btn" id="sync-btn" onclick="syncNow()">↻ Sync</button>
-    <button class="wa-btn" onclick="shareWhatsApp()">📲 WhatsApp</button>
+    <button class="search-btn" onclick="openSearch()">🔍 Search</button><button class="wa-btn" onclick="shareWhatsApp()">📲 WhatsApp</button>
   </div>
   <div class="sync-status" id="sync-status">Last sync: never</div>
   <div class="s-grid" id="s-grid"></div>
@@ -193,6 +193,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-sub" id="sec-sub"></div>
   </div>
   <div class="stats" id="sec-stats"></div>
+  <div class="local-filter" id="sec-filter"><input type="text" placeholder="Filter items…" oninput="filterList('sec-items',this.value)" autocomplete="off"/></div>
   <div id="order-box" class="order-box" style="display:none;">
     <label>Google Sheet / Order tracking link</label>
     <div class="link-row"><input type="url" id="order-link-inp" placeholder="Paste Google Sheets link…"/><button class="open-link" onclick="openOrderLink()">Open ↗</button></div>
@@ -232,6 +233,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="dish-title"></div>
   </div>
   <div class="stats" id="dish-stats"></div>
+  <div class="local-filter" id="dish-filter"><input type="text" placeholder="Filter ingredients…" oninput="filterList('dish-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="dish-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('dish-add-form')">+ Add ingredient</button>
@@ -257,6 +259,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="deep-title"></div>
   </div>
   <div class="stats" id="deep-stats"></div>
+  <div class="local-filter" id="deep-filter"><input type="text" placeholder="Filter items…" oninput="filterList('deep-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="deep-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('deep-add-form')">+ Add sub-item</button>
@@ -285,6 +288,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="rm-cat-title"></div>
   </div>
   <div class="stats" id="rm-cat-stats"></div>
+  <div class="local-filter" id="rm-cat-filter"><input type="text" placeholder="Filter materials…" oninput="filterList('rm-cat-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="rm-cat-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('rm-add-form')">+ Add item manually</button>
@@ -365,6 +369,18 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="alert-icon">🔗</div>
     <p>This item is synced from <b>Menu Curation</b>. Changes can only be made from that page.</p>
     <button onclick="closeAlert()">Got it</button>
+  </div>
+</div>
+
+
+<!-- GLOBAL SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-header">
+    <input class="search-input" id="search-input" placeholder="Search anything…" oninput="runSearch()" autocomplete="off"/>
+    <button class="search-close" onclick="closeSearch()">✕</button>
+  </div>
+  <div class="search-results" id="search-results">
+    <div class="search-empty">Start typing to search across all sections, dishes, ingredients and materials.</div>
   </div>
 </div>
 
@@ -568,7 +584,7 @@ function openSection(sid){
   document.getElementById('ni-cta-area').style.display=isTasks?'block':'none';
   if(isTasks){selAddTags=[];renderAddTagChips('ni-tags-row',selAddTags);populateCtaSecSelect('ni-cta-sec',sid);}
   renderSecItems();
-  showPage('sec-page');
+  showPage('sec-page');showLocalFilter('sec-filter',getItems(curSec).length);
 }
 
 function renderSecItems(){
@@ -655,7 +671,7 @@ function openDish(idx){
   const it=getItems(curSec)[idx];
   document.getElementById('dish-bc').innerHTML=`<b>${sec.name}</b> › ${it.name}`;
   document.getElementById('dish-title').textContent=it.name;
-  renderDishItems();showPage('dish-page');
+  renderDishItems();showPage('dish-page');showLocalFilter('dish-filter',getSubs(curSec,curItem.id).length);
 }
 
 function renderDishItems(){
@@ -709,7 +725,7 @@ function addDishItem(){
 function openDeep(key,title,parentIid,parentIdx){
   deepStack.push({key,title,parentIid,parentIdx});
   renderDeepPage();
-  showPage('deep-page');
+  showPage('deep-page');showLocalFilter('deep-filter',(st.deep[deepStack[deepStack.length-1].key]||[]).length);
 }
 
 function renderDeepPage(){
@@ -985,7 +1001,7 @@ function openRmCat(cat){
   curRmCat=cat;
   document.getElementById('rm-cat-name').textContent=RM_LABELS[cat];
   document.getElementById('rm-cat-title').textContent=RM_ICONS[cat]+' '+RM_LABELS[cat];
-  renderRmCatItems();showPage('rm-cat-page');
+  renderRmCatItems();showPage('rm-cat-page');showLocalFilter('rm-cat-filter',getRmCatItems(curRmCat).length);
 }
 function renderRmCatItems(){
   const all=getRmCatItems(curRmCat);
@@ -1050,6 +1066,104 @@ function toggleForm(id){document.getElementById(id).classList.toggle('open');}
 function showAlert(){document.getElementById('synced-alert').classList.add('open');}
 function closeAlert(){document.getElementById('synced-alert').classList.remove('open');}
 function openOrderLink(){const url=document.getElementById('order-link-inp').value.trim();if(!url)return alert('Paste a link first.');window.open(url,'_blank');}
+
+
+/* ═══════════════════════════════════════════
+   GLOBAL SEARCH
+═══════════════════════════════════════════ */
+function openSearch(){
+  document.getElementById('search-input').value='';
+  document.getElementById('search-results').innerHTML='<div class="search-empty">Start typing to search across all sections, dishes, ingredients and materials.</div>';
+  document.getElementById('search-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('search-input').focus(),100);
+}
+function closeSearch(){document.getElementById('search-overlay').classList.remove('open');}
+
+function runSearch(){
+  const q=document.getElementById('search-input').value.trim().toLowerCase();
+  const out=document.getElementById('search-results');
+  if(!q){out.innerHTML='<div class="search-empty">Start typing to search…</div>';return;}
+  const groups={};
+  function hit(name,notes,done,path,pathLabel,action){
+    if(!name.toLowerCase().includes(q)&&!(notes||'').toLowerCase().includes(q))return;
+    if(!groups[pathLabel])groups[pathLabel]=[];
+    groups[pathLabel].push({name,notes,done,path,pathLabel,action});
+  }
+  st.sections.forEach(sec=>{
+    if(sec.type==='materials'){
+      RM_CATS.forEach(cat=>{
+        getRmCatItems(cat).forEach(it=>{
+          hit(it.name,it.notes,it.done,null,`🌿 Raw Materials › ${RM_LABELS[cat]}`,()=>{closeSearch();openRmSec();setTimeout(()=>openRmCat(cat),50);});
+        });
+      });
+      return;
+    }
+    getItems(sec.id).forEach((it,idx)=>{
+      hit(it.name,it.notes,it.done,null,`${sec.icon} ${sec.name}`,()=>{closeSearch();openSection(sec.id);});
+      if(sec.type==='menu'){
+        getSubs(sec.id,it.id).forEach((sub,sidx)=>{
+          hit(sub.name,sub.notes,sub.done,null,`${sec.icon} ${sec.name} › ${it.name}`,()=>{
+            closeSearch();curSec=sec.id;openSection(sec.id);
+            setTimeout(()=>openDish(idx),80);
+          });
+          const dkey=sec.id+'_'+it.id+'_'+sub.id;
+          (st.deep[dkey]||[]).forEach(deep=>{
+            hit(deep.name,deep.notes,deep.done,null,`${sec.icon} ${sec.name} › ${it.name} › ${sub.name}`,()=>{
+              closeSearch();curSec=sec.id;openSection(sec.id);
+              setTimeout(()=>{openDish(idx);setTimeout(()=>openDeep(dkey,sub.name,it.id,sidx),80);},80);
+            });
+          });
+        });
+      }
+    });
+  });
+  const keys=Object.keys(groups);
+  if(!keys.length){out.innerHTML='<div class="search-empty">No results found for "'+q+'"</div>';return;}
+  out.innerHTML=keys.map(label=>`
+    <div class="search-group">
+      <div class="search-group-title">${label}</div>
+      ${groups[label].map((r,i)=>`
+        <div class="search-result-row" onclick="srAction_${label.replace(/[^a-z0-9]/gi,'_')}_${i}()">
+          <div style="flex:1;">
+            <div class="sr-name">${highlight(r.name,q)}</div>
+            ${r.notes?`<div class="sr-path">${highlight(r.notes,q)}</div>`:''}
+          </div>
+          <span class="sr-badge ${r.done?'d':'p'}">${r.done?'Done':'Pending'}</span>
+        </div>`).join('')}
+    </div>`).join('');
+  // attach click handlers
+  keys.forEach(label=>{
+    groups[label].forEach((r,i)=>{
+      const fnName='srAction_'+label.replace(/[^a-z0-9]/gi,'_')+'_'+i;
+      window[fnName]=r.action;
+    });
+  });
+}
+
+function highlight(text,q){
+  if(!text)return'';
+  const idx=text.toLowerCase().indexOf(q);
+  if(idx<0)return text;
+  return text.slice(0,idx)+'<mark style="background:#fff3b0;border-radius:3px;padding:0 1px;">'+text.slice(idx,idx+q.length)+'</mark>'+text.slice(idx+q.length);
+}
+
+/* ═══════════════════════════════════════════
+   LOCAL FILTER
+═══════════════════════════════════════════ */
+function filterList(listId,q){
+  const c=document.getElementById(listId);if(!c)return;
+  const rows=c.querySelectorAll('.irow');
+  rows.forEach(row=>{
+    const text=row.textContent.toLowerCase();
+    row.style.display=(!q||text.includes(q.toLowerCase()))?'':'none';
+  });
+}
+
+function showLocalFilter(filterId,itemCount){
+  const el=document.getElementById(filterId);if(!el)return;
+  el.style.display=itemCount>5?'block':'none';
+  const inp=el.querySelector('input');if(inp)inp.value='';
+}
 
 /* ═══════════════════════════════════════════
    INIT
