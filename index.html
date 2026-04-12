@@ -1199,7 +1199,7 @@ window.onload = async () => {
     });
 
     const data = await res.json();
-    console.log("☁️ Cloud:", data);
+    console.log("☁️ Cloud data:", data);
 
     if (data.record) {
       st = data.record;
@@ -1210,10 +1210,9 @@ window.onload = async () => {
     console.log("⚠️ Cloud failed", e);
   }
 
-  // 👉 ONLY render AFTER data is set
   migrateSt();
   localSave();
-  renderHome();
+  renderHome(); // ✅ now it WILL exist
 };
 setInterval(async () => {
   try {
