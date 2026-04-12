@@ -1212,22 +1212,7 @@ window.onload = async () => {
 
   migrateSt();
   localSave();
-  renderHome(); // ✅ now it WILL exist
+  renderHome();
+  syncNow();// ✅ now it WILL exist
 };
-setInterval(async () => {
-  try {
-    const res = await fetch(BIN_URL + '/latest', {
-      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
-    });
-
-    const data = await res.json();
-
-    if (JSON.stringify(data.record) !== JSON.stringify(st)) {
-      st = data.record;
-      migrateSt();
-      localSave();
-      renderHome();
-      console.log("Auto-synced 🔄");
-    }
-  } catch (e) {}
-}, 10000);
+setInterval(syncNow, 10000);
