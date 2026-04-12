@@ -485,17 +485,31 @@ async function syncNow(){
 }
 
 async function pushCloud(){
-  try{await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
-  document.getElementById('sync-status').textContent='Saved: '+new Date().toLocaleTimeString();}
-  catch(e){}
-  localSave();
+  try {
+    const res = await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': API_KEY
+      },
+      body: JSON.stringify(st)
+    });
+
+    const data = await res.json();
+    console.log("✅ Cloud saved", data);
+
+  } catch (e) {
+    console.error("❌ Cloud error", e);
+  }
 }
 async function save(){
-  localSave(); // backup
+  console.log("💾 Saving...");
+  localSave();
+
   try {
-    await pushCloud(); // cloud is primary now
+    await pushCloud();
   } catch(e) {
-    console.log("Cloud save failed, using local backup");
+    console.log("Cloud save failed");
   }
 }
 
