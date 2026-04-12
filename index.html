@@ -240,9 +240,9 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
       <textarea id="ndi-notes" placeholder="Notes (optional)"></textarea>
       <div class="form-label">Raw Materials category</div>
       <select id="ndi-rmcat">
-        <option value="misc">Miscellaneous (default)</option>
-        <option value="consumable">Consumable</option>
+        <option value="consumable">Consumable (default)</option>
         <option value="nonconsumable">Non-Consumable</option>
+        <option value="misc">Miscellaneous</option>
       </select>
       <div class="form-row"><button class="btn-s" onclick="toggleForm('dish-add-form')">Cancel</button><button class="btn-p" onclick="addDishItem()">Add</button></div>
     </div>
@@ -698,7 +698,7 @@ function addDishItem(){
   const key=curSec+'_'+curItem.id;
   if(!st.subitems[key])st.subitems[key]=[];
   st.subitems[key].push({id:uid(),name,notes,done:false,rmCat});
-  save();document.getElementById('ndi-name').value='';document.getElementById('ndi-notes').value='';document.getElementById('ndi-rmcat').value='misc';
+  save();document.getElementById('ndi-name').value='';document.getElementById('ndi-notes').value='';document.getElementById('ndi-rmcat').value='consumable';
   toggleForm('dish-add-form');renderDishItems();
 }
 
