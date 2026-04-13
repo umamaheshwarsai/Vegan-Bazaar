@@ -392,7 +392,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 ═══════════════════════════════════════════ */
 const BIN_ID='69daab5636566621a8a22851';
 const API_KEY='$2a$10$5Ms12r9fbKUkzrmyLlxL.uqNxc3zrKcfICnPpTDM7kLYkBLyz0mIq';
-const BIN_URL=const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;;
+const BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
 
 const ICONS=['🌿','📋','🍽️','📦','🛒','📝','💬','🎯','🔧','📊','🌱','🥘'];
 const SEC_ACCENTS=['#4a9e80','#7ab040','#c05a28','#2d7a60','#8a5a20','#5a7a20'];
@@ -477,41 +477,26 @@ async function syncNow(){
   try{
     const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}});
     const data=await res.json();
-    if(data.record&&data.record.sections){st=data.record;migrateSt();localSave();renderHome();}
-    document.getElementById('sync-status').textContent='Last sync: '+new Date().toLocaleTimeString();
-  }catch(e){document.getElementById('sync-status').textContent='Sync failed';}
+    if(data.record&&data.record.sections){
+      st=data.record;migrateSt();localSave();renderHome();
+      document.getElementById('sync-status').textContent='✓ Synced: '+new Date().toLocaleTimeString();
+    } else {
+      document.getElementById('sync-status').textContent='⚠ No cloud data found';
+    }
+  }catch(e){
+    document.getElementById('sync-status').textContent='⚠ Offline — showing local data';
+  }
   btn.classList.remove('syncing');btn.textContent='↻ Sync';
   isSyncing=false;
 }
 
 async function pushCloud(){
-  try {
-    const res = await fetch(BIN_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': API_KEY
-      },
-      body: JSON.stringify(st)
-    });
-
-    const data = await res.json();
-    console.log("✅ Cloud saved", data);
-
-  } catch (e) {
-    console.error("❌ Cloud error", e);
-  }
-}
-async function save(){
-  console.log("💾 Saving...");
+  try{await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
+  document.getElementById('sync-status').textContent='Saved: '+new Date().toLocaleTimeString();}
+  catch(e){}
   localSave();
-
-  try {
-    await pushCloud();
-  } catch(e) {
-    console.log("Cloud save failed");
-  }
 }
+function save(){localSave();pushCloud();}
 
 /* ═══════════════════════════════════════════
    HELPERS
@@ -1188,50 +1173,13 @@ function showLocalFilter(filterId,itemCount){
 
 /* ═══════════════════════════════════════════
    INIT
-window.onload = async () => {
-  console.log("🚀 App starting...");
-
-  try {
-    const res = await fetch("https://api.jsonbin.io/v3/b/69daab5636566621a8a22851/latest", {
-      headers: {
-        "X-Master-Key": "$2a$10$5Ms12r9fbKUkzrmyLlxL.uqNxc3zrKcfICnPpTDM7kLYkBLyz0mIq"
-      }
-    });
-
-    const data = await res.json();
-    console.log("☁️ Cloud data:", data);
-
-    if (data.record) {
-      st = data.record;
-      console.log("✅ Loaded from cloud");
-    }
-
-  } catch (e) {
-    console.log("⚠️ Cloud failed", e);
-  }
-
-  migrateSt();
-  localSave();
-  renderHome();
-  syncNow();// ✅ now it WILL exist
-};
-setInterval(syncNow, 10000);
-(async () => {
-  try {
-    const res = await fetch(BIN_URL + '/latest', {
-      headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
-    });
-
-    const data = await res.json();
-
-    if (data.record) {
-      st = data.record;
-      migrateSt();
-      localSave();
-      renderHome();
-      console.log("🔥 Initial load from cloud");
-    }
-  } catch (e) {
-    console.log("Initial load failed");
-  }
-})();
+═══════════════════════════════════════════ */
+// Always load from cloud first; local is just a fast-start cache
+const cached=localLoad();
+if(cached){st=cached;migrateSt();renderHome();}
+else{migrateSt();renderHome();}
+// Always sync from cloud on every page load — this is the source of truth
+syncNow();
+</script>
+</body>
+</html>
