@@ -162,10 +162,32 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 .rm-cat-row{cursor:pointer;}
 .rm-cat-row:hover{background:var(--mint);}
 .empty{text-align:center;padding:28px 16px;color:var(--ink3);font-size:13px;}
+.loading-screen{position:fixed;inset:0;background:var(--teal);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.loading-screen .ls-logo{font-size:48px;animation:pulse 1.2s ease-in-out infinite;}
+.loading-screen .ls-title{font-family:var(--font-h);font-size:22px;color:#e8f5e0;}
+.loading-screen .ls-sub{font-size:13px;color:#9fd0b8;font-style:italic;}
+.loading-screen .ls-dot{display:flex;gap:8px;margin-top:8px;}
+.loading-screen .ls-dot span{width:8px;height:8px;border-radius:50%;background:#9fd0b8;animation:bounce 1.2s ease-in-out infinite;}
+.loading-screen .ls-dot span:nth-child(2){animation-delay:0.2s;}
+.loading-screen .ls-dot span:nth-child(3){animation-delay:0.4s;}
+.loading-screen .ls-err{font-size:13px;color:#ffb8b8;text-align:center;padding:0 24px;display:none;}
+.loading-screen .ls-retry{display:none;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-family:var(--font-b);cursor:pointer;margin-top:4px;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+@keyframes bounce{0%,100%{transform:translateY(0);opacity:0.5;}50%{transform:translateY(-6px);opacity:1;}}
+
 </style>
 </head>
 <body>
 <div id="app">
+
+<div id="loading-screen" class="loading-screen">
+  <div class="ls-logo">🌿</div>
+  <div class="ls-title">Project Vegan Bazaar</div>
+  <div class="ls-sub">Let's kill it — The Boys</div>
+  <div class="ls-dot"><span></span><span></span><span></span></div>
+  <div class="ls-err" id="ls-err">Could not reach the server.<br>Check your connection.</div>
+  <button class="ls-retry" id="ls-retry" onclick="retrySync()">Try again</button>
+</div>
 
 <!-- HOME -->
 <div id="home-page" class="page active">
@@ -467,6 +489,43 @@ function migrateSt(){
       }
     }
   });
+}
+
+async function syncOnLoad(){
+  // Always block on cloud fetch — never show stale local data
+  try{
+    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}});
+    const data=await res.json();
+    if(data.record&&data.record.sections){
+      st=data.record;migrateSt();localSave();
+    }
+    hideLoading();
+    renderHome();
+    document.getElementById('sync-status').textContent='✓ Synced: '+new Date().toLocaleTimeString();
+  }catch(e){
+    // Show error state on loading screen, offer retry
+    document.getElementById('ls-err').style.display='block';
+    document.getElementById('ls-retry').style.display='block';
+    document.getElementById('sync-status').textContent='⚠ Offline';
+    // If we have local data, offer to use it
+    const cached=localLoad();
+    if(cached){
+      const offlineBtn=document.getElementById('ls-retry');
+      offlineBtn.textContent='Use offline data';
+      offlineBtn.onclick=()=>{st=cached;migrateSt();hideLoading();renderHome();};
+    }
+  }
+}
+
+function hideLoading(){
+  const ls=document.getElementById('loading-screen');
+  if(ls)ls.style.display='none';
+}
+
+function retrySync(){
+  document.getElementById('ls-err').style.display='none';
+  document.getElementById('ls-retry').style.display='none';
+  syncOnLoad();
 }
 
 async function syncNow(){
@@ -1174,12 +1233,9 @@ function showLocalFilter(filterId,itemCount){
 /* ═══════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════ */
-// Always load from cloud first; local is just a fast-start cache
-const cached=localLoad();
-if(cached){st=cached;migrateSt();renderHome();}
-else{migrateSt();renderHome();}
-// Always sync from cloud on every page load — this is the source of truth
-syncNow();
+// Show loading screen, fetch from cloud, render only after data arrives
+migrateSt();
+syncOnLoad();
 </script>
 </body>
 </html>
