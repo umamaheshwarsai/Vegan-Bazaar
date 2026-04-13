@@ -492,29 +492,29 @@ function migrateSt(){
 }
 
 async function syncOnLoad(){
-  // Always block on cloud fetch — never show stale local data
   try{
-    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}});
+    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY}});
     const data=await res.json();
-    if(data.record&&data.record.sections){
-      st=data.record;migrateSt();localSave();
+    console.log('JSONBin response:', JSON.stringify(data).slice(0,200));
+    // JSONBin wraps data in {record: {...}, metadata: {...}}
+    const record = (data && data.record) ? data.record : data;
+    if(record && record.sections && record.sections.length){
+      st=record; migrateSt(); localSave();
+      document.getElementById('sync-status').textContent='✓ Synced: '+new Date().toLocaleTimeString();
+    } else {
+      console.warn('No valid sections in response, falling back to local');
+      const cached=localLoad();
+      if(cached){st=cached;migrateSt();}
+      document.getElementById('sync-status').textContent='⚠ Using local data';
     }
-    hideLoading();
-    renderHome();
-    document.getElementById('sync-status').textContent='✓ Synced: '+new Date().toLocaleTimeString();
   }catch(e){
-    // Show error state on loading screen, offer retry
-    document.getElementById('ls-err').style.display='block';
-    document.getElementById('ls-retry').style.display='block';
-    document.getElementById('sync-status').textContent='⚠ Offline';
-    // If we have local data, offer to use it
+    console.error('Sync error:', e);
     const cached=localLoad();
-    if(cached){
-      const offlineBtn=document.getElementById('ls-retry');
-      offlineBtn.textContent='Use offline data';
-      offlineBtn.onclick=()=>{st=cached;migrateSt();hideLoading();renderHome();};
-    }
+    if(cached){st=cached;migrateSt();}
+    document.getElementById('sync-status').textContent='⚠ Offline — showing local data';
   }
+  hideLoading();
+  renderHome();
 }
 
 function hideLoading(){
@@ -528,16 +528,20 @@ function retrySync(){
   syncOnLoad();
 }
 
+// Safety net: if loading screen is still visible after 8 seconds, force hide it
+setTimeout(()=>{hideLoading();if(!document.querySelector('.page.active')||document.getElementById('home-page').style.display==='none'){renderHome();}},8000);
+
 async function syncNow(){
   if(isSyncing)return;
   isSyncing=true;
   const btn=document.getElementById('sync-btn');
   btn.classList.add('syncing');btn.textContent='↻ Syncing…';
   try{
-    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':false}});
+    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY}});
     const data=await res.json();
-    if(data.record&&data.record.sections){
-      st=data.record;migrateSt();localSave();renderHome();
+    const rec=(data&&data.record)?data.record:data;
+    if(rec&&rec.sections&&rec.sections.length){
+      st=rec;migrateSt();localSave();renderHome();
       document.getElementById('sync-status').textContent='✓ Synced: '+new Date().toLocaleTimeString();
     } else {
       document.getElementById('sync-status').textContent='⚠ No cloud data found';
@@ -550,9 +554,19 @@ async function syncNow(){
 }
 
 async function pushCloud(){
-  try{await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
-  document.getElementById('sync-status').textContent='Saved: '+new Date().toLocaleTimeString();}
-  catch(e){}
+  try{
+    const res=await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(st)});
+    const d=await res.json();
+    if(d.metadata){
+      document.getElementById('sync-status').textContent='✓ Saved: '+new Date().toLocaleTimeString();
+    } else {
+      document.getElementById('sync-status').textContent='⚠ Save failed';
+      console.error('JSONBin write response:', d);
+    }
+  } catch(e){
+    document.getElementById('sync-status').textContent='⚠ Offline — saved locally';
+    console.error('JSONBin write error:', e);
+  }
   localSave();
 }
 function save(){localSave();pushCloud();}
