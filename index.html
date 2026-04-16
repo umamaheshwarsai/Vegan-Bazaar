@@ -162,6 +162,20 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 .rm-cat-row{cursor:pointer;}
 .rm-cat-row:hover{background:var(--mint);}
 .empty{text-align:center;padding:28px 16px;color:var(--ink3);font-size:13px;}
+/* NOTES SYSTEM */
+.notes-preview{font-size:11px;color:var(--teal2);margin-top:4px;cursor:pointer;text-decoration:underline;}
+.notes-modal-list{max-height:200px;overflow-y:auto;margin-bottom:12px;}
+.note-item{background:var(--cream);border:1px solid var(--mint2);border-radius:8px;padding:8px 10px;margin-bottom:6px;position:relative;font-size:13px;color:var(--ink);line-height:1.5;}
+.note-item .note-del{position:absolute;top:6px;right:8px;background:none;border:none;color:#ccc;font-size:14px;cursor:pointer;}
+.note-item .note-del:hover{color:#e24b4a;}
+.note-add-row{display:flex;gap:8px;align-items:flex-end;}
+.note-add-row textarea{flex:1;border:1px solid var(--mint2);border-radius:8px;padding:8px 10px;font-size:13px;font-family:var(--font-b);color:var(--ink);background:var(--cream);outline:none;resize:vertical;min-height:60px;}
+.note-add-row textarea:focus{border-color:var(--teal3);}
+/* PROGRESS BAR on sub-pages */
+.sub-progress{margin:8px 14px 0;background:var(--mint2);border-radius:20px;height:6px;overflow:hidden;}
+.sub-progress-fill{height:100%;background:var(--leaf);border-radius:20px;transition:width 0.4s;}
+.sub-progress-label{font-size:11px;color:var(--ink3);padding:4px 14px 0;display:flex;justify-content:space-between;}
+
 .loading-screen{position:fixed;inset:0;background:var(--teal);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
 .loading-screen .ls-logo{font-size:48px;animation:pulse 1.2s ease-in-out infinite;}
 .loading-screen .ls-title{font-family:var(--font-h);font-size:22px;color:#e8f5e0;}
@@ -226,7 +240,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <button class="open-add" onclick="toggleForm('sec-add-form')">+ Add item</button>
     <div class="add-form" id="sec-add-form">
       <input type="text" id="ni-name" placeholder="Item name"/>
-      <textarea id="ni-notes" placeholder="Notes (optional)"></textarea>
+      <textarea id="ni-notes" placeholder="Quick note (optional — use 📝 for multiple notes)"></textarea>
       <!-- Tags (shown for tasks) -->
       <div id="ni-tag-area" style="display:none;">
         <div class="form-label">Tags <span style="cursor:pointer;color:var(--teal2);text-decoration:underline;font-size:11px;" onclick="openTagsModal()">Edit tags</span></div>
@@ -255,13 +269,15 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="dish-title"></div>
   </div>
   <div class="stats" id="dish-stats"></div>
+  <div class="sub-progress-label" id="dish-prog-label"></div>
+  <div class="sub-progress"><div class="sub-progress-fill" id="dish-prog-fill" style="width:0%"></div></div>
   <div class="local-filter" id="dish-filter"><input type="text" placeholder="Filter ingredients…" oninput="filterList('dish-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="dish-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('dish-add-form')">+ Add ingredient</button>
     <div class="add-form" id="dish-add-form">
       <input type="text" id="ndi-name" placeholder="Ingredient name"/>
-      <textarea id="ndi-notes" placeholder="Notes (optional)"></textarea>
+      <textarea id="ndi-notes" placeholder="Quick note (optional — use 📝 for multiple notes)"></textarea>
       <div class="form-label">Raw Materials category</div>
       <select id="ndi-rmcat">
         <option value="consumable">Consumable (default)</option>
@@ -281,13 +297,15 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="deep-title"></div>
   </div>
   <div class="stats" id="deep-stats"></div>
+  <div class="sub-progress-label" id="deep-prog-label"></div>
+  <div class="sub-progress"><div class="sub-progress-fill" id="deep-prog-fill" style="width:0%"></div></div>
   <div class="local-filter" id="deep-filter"><input type="text" placeholder="Filter items…" oninput="filterList('deep-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="deep-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('deep-add-form')">+ Add sub-item</button>
     <div class="add-form" id="deep-add-form">
       <input type="text" id="ndp-name" placeholder="Name"/>
-      <textarea id="ndp-notes" placeholder="Notes (optional)"></textarea>
+      <textarea id="ndp-notes" placeholder="Quick note (optional — use 📝 for multiple notes)"></textarea>
       <div class="form-row"><button class="btn-s" onclick="toggleForm('deep-add-form')">Cancel</button><button class="btn-p" onclick="addDeepItem()">Add</button></div>
     </div>
   </div>
@@ -310,13 +328,15 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
     <div class="ph-title" id="rm-cat-title"></div>
   </div>
   <div class="stats" id="rm-cat-stats"></div>
+  <div class="sub-progress-label" id="rm-prog-label"></div>
+  <div class="sub-progress"><div class="sub-progress-fill" id="rm-prog-fill" style="width:0%"></div></div>
   <div class="local-filter" id="rm-cat-filter"><input type="text" placeholder="Filter materials…" oninput="filterList('rm-cat-items',this.value)" autocomplete="off"/></div>
   <div class="ilist" id="rm-cat-items"></div>
   <div class="add-area">
     <button class="open-add" onclick="toggleForm('rm-add-form')">+ Add item manually</button>
     <div class="add-form" id="rm-add-form">
       <input type="text" id="nrm-name" placeholder="Item name"/>
-      <textarea id="nrm-notes" placeholder="Notes (optional)"></textarea>
+      <textarea id="nrm-notes" placeholder="Quick note (optional — use 📝 for multiple notes)"></textarea>
       <div class="form-row"><button class="btn-s" onclick="toggleForm('rm-add-form')">Cancel</button><button class="btn-p" onclick="addRmItem()">Add</button></div>
     </div>
   </div>
@@ -355,7 +375,7 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
   <div class="modal">
     <h3>Edit item</h3>
     <input type="text" id="ei-name" placeholder="Item name"/>
-    <textarea id="ei-notes" placeholder="Notes (optional)"></textarea>
+    <textarea id="ei-notes" placeholder="Quick note (optional — use 📝 for multiple notes)"></textarea>
     <div id="ei-tag-area" style="display:none;">
       <div class="form-label" style="margin-bottom:6px;">Tags</div>
       <div class="tags-select-row" id="ei-tags-row"></div>
@@ -386,14 +406,22 @@ body{font-family:var(--font-b);background:var(--cream);min-height:100vh;color:va
 </div>
 
 <!-- Synced alert -->
-<div class="alert-pop" id="synced-alert">
-  <div class="alert-box">
-    <div class="alert-icon">🔗</div>
-    <p>This item is synced from <b>Menu Curation</b>. Changes can only be made from that page.</p>
-    <button onclick="closeAlert()">Got it</button>
+
+
+
+
+<!-- Notes Modal -->
+<div class="modal-wrap" id="notes-modal">
+  <div class="modal">
+    <h3 id="notes-modal-title">Notes</h3>
+    <div class="notes-modal-list" id="notes-modal-list"></div>
+    <div class="note-add-row">
+      <textarea id="note-input" placeholder="Add a note…"></textarea>
+      <button class="btn-p" style="flex:none;padding:8px 14px;" onclick="addNote()">Add</button>
+    </div>
+    <button class="btn-s" style="margin-top:10px;width:100%;" onclick="closeModal('notes-modal')">Done</button>
   </div>
 </div>
-
 
 <!-- GLOBAL SEARCH OVERLAY -->
 <div class="search-overlay" id="search-overlay">
@@ -690,11 +718,13 @@ function renderSecItems(){
         <div class="iname">${it.name}</div>
         ${it.notes?`<div class="inotes">${it.notes}</div>`:''}
         ${tagHtml?`<div class="tags-wrap">${tagHtml}</div>`:''}
+        ${(it.notes2||[]).length?`<div class="notes-preview" onclick="openItemNotes(event,'sec',${idx})">📝 ${it.notes2.length} note${it.notes2.length>1?'s':''}</div>`:''}
         ${hasCta?`<span class="link-badge">↗ ${ctaSec.icon} ${ctaSec.name}${it.ctaItem?' › item':''}</span>`:''}
       </div>
       <span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>
       ${clickable?'<span class="drill">›</span>':''}
       <div class="row-actions">
+        <button class="edit-btn" onclick="openItemNotes(event,'sec',${idx})">📝</button>
         <button class="edit-btn" onclick="openEditItem(event,'sec',${idx})">✎</button>
         <button class="del-btn" onclick="delSecItem(event,${idx})">×</button>
       </div>
@@ -757,6 +787,7 @@ function renderDishItems(){
   const subs=getSubs(curSec,curItem.id);
   const done=subs.filter(i=>i.done).length;const allDone=subs.length>0&&subs.every(i=>i.done);
   document.getElementById('dish-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${subs.length-done} pending</span>`;
+  updateProgressBar('dish-prog-fill','dish-prog-label',done,subs.length);
   const c=document.getElementById('dish-items');
   if(!subs.length){c.innerHTML='<div class="empty">No ingredients yet.</div>';return;}
   c.innerHTML=subs.map((sub,idx)=>`
@@ -766,10 +797,12 @@ function renderDishItems(){
         <div class="iname">${sub.name}</div>
         ${sub.notes?`<div class="inotes">${sub.notes}</div>`:''}
         <div class="tags-wrap"><span class="tag ${sub.rmCat||'misc'}">${RM_LABELS[sub.rmCat||'misc']}</span></div>
+        ${(sub.notes2||[]).length?`<div class="notes-preview" onclick="openItemNotes(event,'dish',${idx})">📝 ${sub.notes2.length} note${sub.notes2.length>1?'s':''}</div>`:''}
       </div>
       <span class="sbadge ${sub.done?'d':'p'}">${sub.done?'Done':'Pending'}</span>
       <span class="drill">›</span>
       <div class="row-actions">
+        <button class="edit-btn" onclick="openItemNotes(event,'dish',${idx})">📝</button>
         <button class="edit-btn" onclick="openEditItem(event,'dish',${idx})">✎</button>
         <button class="del-btn" onclick="delDishItem(event,${idx})">×</button>
       </div>
@@ -821,6 +854,7 @@ function renderDeepPage(){
 
   const done=its.filter(i=>i.done).length;const allDone=its.length>0&&its.every(i=>i.done);
   document.getElementById('deep-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${its.length-done} pending</span>`;
+  updateProgressBar('deep-prog-fill','deep-prog-label',done,its.length);
   const c=document.getElementById('deep-items');
   if(!its.length){c.innerHTML='<div class="empty">No items yet — add one below.</div>';return;}
   c.innerHTML=its.map((it,idx)=>`
@@ -833,6 +867,7 @@ function renderDeepPage(){
       <span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>
       <span class="drill">›</span>
       <div class="row-actions">
+        <button class="edit-btn" onclick="openItemNotes(event,'deep',${idx})">📝</button>
         <button class="edit-btn" onclick="openEditItem(event,'deep',${idx})">✎</button>
         <button class="del-btn" onclick="delDeepItem(event,'${frame.key}',${idx})">×</button>
       </div>
@@ -898,6 +933,12 @@ function saveEditItem(){
   else if(level==='dish'){it=st.subitems[curSec+'_'+curItem.id][idx];}
   else if(level==='deep'){const frame=deepStack[deepStack.length-1];it=st.deep[frame.key][idx];}
   else if(level==='rm'){it=st.rmManual[curRmCat][idx];}
+  else if(level==='synced'){
+    // edit synced ingredient name — find and update in subitems
+    const m2=st.sections.find(s=>s.type==='menu');
+    if(m2){for(const dish of getItems(m2.id)){const key2=m2.id+'_'+dish.id;const subs2=st.subitems[key2]||[];const ing2=subs2.find(s=>s.id===editCtx.ingId);if(ing2){ing2.name=name;save();renderRmCatItems();closeModal('edit-item-modal');return;}}}
+    closeModal('edit-item-modal');return;
+  }
   if(!it)return;
   it.name=name;it.notes=notes;
   const sec=st.sections.find(s=>s.id===curSec);
@@ -1086,12 +1127,26 @@ function renderRmCatItems(){
   const all=getRmCatItems(curRmCat);
   const done=all.filter(i=>i.done).length;const allDone=all.length>0&&all.every(i=>i.done);
   document.getElementById('rm-cat-stats').innerHTML=allDone?`<span class="stat all">🎉 All done!</span>`:`<span class="stat d">✓ ${done} done</span><span class="stat p">⏳ ${all.length-done} pending</span>`;
+  updateProgressBar('rm-prog-fill','rm-prog-label',done,all.length);
   const c=document.getElementById('rm-cat-items');
   if(!all.length){c.innerHTML='<div class="empty">No items here yet.</div>';return;}
   c.innerHTML=all.map(it=>{
-    if(it.synced)return `<div class="irow synced" onclick="showAlert()"><button class="tog readonly ${it.done?'done':''}" onclick="showAlert();event.stopPropagation()"></button><div class="icontent"><div class="iname">${it.name}</div>${it.sourceDisp?`<div class="inotes">From: ${it.sourceDisp}</div>`:''}<span class="sync-badge">🔗 Synced from Menu Curation</span></div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span></div>`;
+    if(it.synced)return `<div class="irow synced ${it.done?'done':''}">
+      <button class="tog ${it.done?'done':''}" onclick="togSyncedRM('${it.id}')"></button>
+      <div class="icontent">
+        <div class="iname">${it.name}</div>
+        ${it.sourceDisp?`<div class="inotes">📍 From: ${it.sourceDisp}</div>`:''}
+        <span class="sync-badge">🔗 Synced · edits reflect in Menu Curation</span>
+        ${(it.rmNotes||[]).length?`<div class="notes-preview" onclick="openNotesModal('synced','${it.id}',event)">📝 ${(it.rmNotes||[]).length} note${(it.rmNotes||[]).length>1?'s':''}</div>`:''}
+      </div>
+      <span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span>
+      <div class="row-actions">
+        <button class="edit-btn" onclick="openNotesModal('synced','${it.id}',event)">📝</button>
+        <button class="edit-btn" onclick="openEditSyncedRM(event,'${it.id}')">✎</button>
+      </div>
+    </div>`;
     const mi=it._mi;
-    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${mi})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><div class="row-actions"><button class="edit-btn" onclick="openEditRm(event,${mi})">✎</button><button class="del-btn" onclick="delRmManual(${mi})">×</button></div></div>`;
+    return `<div class="irow ${it.done?'done':''}"><button class="tog ${it.done?'done':''}" onclick="togRmManual(${mi})"></button><div class="icontent"><div class="iname">${it.name}</div>${it.notes?`<div class="inotes">${it.notes}</div>`:''}</div><span class="sbadge ${it.done?'d':'p'}">${it.done?'Done':'Pending'}</span><div class="row-actions"><button class="edit-btn" onclick="openItemNotes(event,'rm',${mi})">📝</button><button class="edit-btn" onclick="openEditRm(event,${mi})">✎</button><button class="del-btn" onclick="delRmManual(${mi})">×</button></div></div>`;
   }).join('');
 }
 function togRmManual(i){st.rmManual[curRmCat][i].done=!st.rmManual[curRmCat][i].done;save();renderRmCatItems();renderHome();}
@@ -1142,10 +1197,187 @@ function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function toggleForm(id){document.getElementById(id).classList.toggle('open');}
-function showAlert(){document.getElementById('synced-alert').classList.add('open');}
-function closeAlert(){document.getElementById('synced-alert').classList.remove('open');}
+function showAlert(){/* synced items now editable */}
+
 function openOrderLink(){const url=document.getElementById('order-link-inp').value.trim();if(!url)return alert('Paste a link first.');window.open(url,'_blank');}
 
+
+
+/* ═══════════════════════════════════════════
+   NOTES SYSTEM (replaces single notes field)
+═══════════════════════════════════════════ */
+let notesCtx = null; // {type:'item'|'sub'|'deep'|'rm'|'synced', secId, itemId, subId, deepKey, rmCat, rmIdx, syncedIngId}
+
+function openNotesModal(type, id, e) {
+  if(e) e.stopPropagation();
+  notesCtx = {type, id};
+  const notes = getNotesArr(type, id);
+  document.getElementById('notes-modal-title').textContent = '📝 Notes';
+  renderNotesList(notes);
+  document.getElementById('note-input').value = '';
+  openModal('notes-modal');
+}
+
+function openItemNotes(e, level, idx) {
+  if(e) e.stopPropagation();
+  let it;
+  if(level==='sec') it = getItems(curSec)[idx];
+  else if(level==='dish') it = getSubs(curSec, curItem.id)[idx];
+  else if(level==='deep') { const f=deepStack[deepStack.length-1]; it=getDeep(f.key)[idx]; }
+  else if(level==='rm') it = st.rmManual[curRmCat][idx];
+  if(!it) return;
+  notesCtx = {level, idx, itemRef: it};
+  document.getElementById('notes-modal-title').textContent = '📝 ' + it.name;
+  renderNotesList(it.notes2 || []);
+  document.getElementById('note-input').value = '';
+  openModal('notes-modal');
+}
+
+function getNotesArr(type, id) {
+  if(type === 'synced') {
+    // find ingredient across all dishes in menu section
+    const m = st.sections.find(s=>s.type==='menu');
+    if(!m) return [];
+    for(const dish of getItems(m.id)) {
+      const subs = getSubs(m.id, dish.id);
+      const ing = subs.find(s=>s.id===id);
+      if(ing) return ing.notes2 || [];
+    }
+    return [];
+  }
+  return [];
+}
+
+function renderNotesList(notes) {
+  const c = document.getElementById('notes-modal-list');
+  if(!notes || !notes.length) {
+    c.innerHTML = '<div class="empty" style="padding:12px;">No notes yet — add one below.</div>';
+    return;
+  }
+  c.innerHTML = notes.map((n,i) => `
+    <div class="note-item">
+      ${n.text}
+      <button class="note-del" onclick="delNote(${i})">×</button>
+    </div>`).join('');
+}
+
+function addNote() {
+  const text = document.getElementById('note-input').value.trim();
+  if(!text) return;
+  const note = {text, ts: Date.now()};
+
+  if(notesCtx.itemRef) {
+    // item-level notes
+    const it = notesCtx.itemRef;
+    if(!it.notes2) it.notes2 = [];
+    it.notes2.push(note);
+    save();
+    renderNotesList(it.notes2);
+    // re-render the parent page
+    if(notesCtx.level==='sec') renderSecItems();
+    else if(notesCtx.level==='dish') renderDishItems();
+    else if(notesCtx.level==='deep') renderDeepPage();
+    else if(notesCtx.level==='rm') renderRmCatItems();
+  } else if(notesCtx.type==='synced') {
+    // synced ingredient — save notes on the ingredient in subitems
+    const m = st.sections.find(s=>s.type==='menu');
+    if(!m) return;
+    for(const dish of getItems(m.id)) {
+      const subs = st.subitems[m.id+'_'+dish.id] || [];
+      const ing = subs.find(s=>s.id===notesCtx.id);
+      if(ing) {
+        if(!ing.notes2) ing.notes2 = [];
+        ing.notes2.push(note);
+        save();
+        renderNotesList(ing.notes2);
+        renderRmCatItems();
+        break;
+      }
+    }
+  }
+  document.getElementById('note-input').value = '';
+}
+
+function delNote(idx) {
+  if(!confirm('Delete this note?')) return;
+  if(notesCtx.itemRef) {
+    notesCtx.itemRef.notes2.splice(idx, 1);
+    save();
+    renderNotesList(notesCtx.itemRef.notes2);
+    if(notesCtx.level==='sec') renderSecItems();
+    else if(notesCtx.level==='dish') renderDishItems();
+    else if(notesCtx.level==='deep') renderDeepPage();
+    else if(notesCtx.level==='rm') renderRmCatItems();
+  } else if(notesCtx.type==='synced') {
+    const m = st.sections.find(s=>s.type==='menu');
+    if(!m) return;
+    for(const dish of getItems(m.id)) {
+      const subs = st.subitems[m.id+'_'+dish.id] || [];
+      const ing = subs.find(s=>s.id===notesCtx.id);
+      if(ing && ing.notes2) {
+        ing.notes2.splice(idx, 1);
+        save();
+        renderNotesList(ing.notes2);
+        renderRmCatItems();
+        break;
+      }
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SYNCED RM — EDITABLE (reflects to Menu Curation)
+═══════════════════════════════════════════ */
+function togSyncedRM(ingId) {
+  // Find and toggle the ingredient in subitems
+  const m = st.sections.find(s=>s.type==='menu');
+  if(!m) return;
+  for(const dish of getItems(m.id)) {
+    const key = m.id+'_'+dish.id;
+    const subs = st.subitems[key] || [];
+    const idx = subs.findIndex(s=>s.id===ingId);
+    if(idx >= 0) {
+      st.subitems[key][idx].done = !st.subitems[key][idx].done;
+      save();
+      bubbleSecItem(m.id, dish.id);
+      renderRmCatItems();
+      renderHome();
+      return;
+    }
+  }
+}
+
+function openEditSyncedRM(e, ingId) {
+  e.stopPropagation();
+  const m = st.sections.find(s=>s.type==='menu');
+  if(!m) return;
+  for(const dish of getItems(m.id)) {
+    const key = m.id+'_'+dish.id;
+    const subs = st.subitems[key] || [];
+    const ing = subs.find(s=>s.id===ingId);
+    if(ing) {
+      editCtx = {level:'synced', ingId, key};
+      document.getElementById('ei-name').value = ing.name || '';
+      document.getElementById('ei-notes').value = '';
+      document.getElementById('ei-tag-area').style.display = 'none';
+      document.getElementById('ei-cta-area').style.display = 'none';
+      openModal('edit-item-modal');
+      return;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BARS
+═══════════════════════════════════════════ */
+function updateProgressBar(fillId, labelId, done, total) {
+  const fill = document.getElementById(fillId);
+  const label = document.getElementById(labelId);
+  if(!fill || !label) return;
+  const pct = total ? Math.round(done/total*100) : 0;
+  fill.style.width = pct + '%';
+  label.innerHTML = `<span>${done} of ${total} done</span><span>${pct}%</span>`;
+}
 
 /* ═══════════════════════════════════════════
    GLOBAL SEARCH
